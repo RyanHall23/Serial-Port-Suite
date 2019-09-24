@@ -7,8 +7,8 @@ namespace SerialSuite
 {
     public partial class Form2 : Form
     {
-        Form1 F1;
-        SerialPort sPort = new SerialPort();
+        Form1 F1;       //initialises F1 variable
+        SerialPort sPort = new SerialPort();    //used to copy create a template of the types
 
         public Form2()
         {
@@ -21,6 +21,22 @@ namespace SerialSuite
 
         }
 
+        /// <summary>
+        /// Allows for access to Form1 to save user changes to the serial port configuration
+        /// </summary>
+        /// <param name="callingForm"></param> Is the source of which this form was invoked
+        public Form2(Form callingForm)
+        {
+            F1 = callingForm as Form1;
+            InitializeComponent();
+        }
+
+
+        /// <summary>
+        /// Updates the parity selection from predefined valid options
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxParity_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxParity.SelectedIndex)
@@ -48,6 +64,11 @@ namespace SerialSuite
             }
         }
 
+        /// <summary>
+        /// Updates the stop bits for the serial port from defined valid options
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxStopBits_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxStopBits.SelectedIndex)
@@ -71,6 +92,11 @@ namespace SerialSuite
             }
         }
 
+        /// <summary>
+        /// Updates the data bits from predefined valid options
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxDataBits_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxStopBits.SelectedIndex)
@@ -94,6 +120,11 @@ namespace SerialSuite
             }
         }
 
+        /// <summary>
+        /// Updates the handshake serial setting from valid options
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxHandshake_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxStopBits.SelectedIndex)
@@ -117,6 +148,11 @@ namespace SerialSuite
             }
         }
 
+        /// <summary>
+        /// Updates the RTS setting from valid options
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxRTS_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxRTS.SelectedIndex)
@@ -132,16 +168,22 @@ namespace SerialSuite
             }
         }
 
+        /// <summary>
+        /// If confirmed, copies the settings to the main serial port and closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
-            F1.serialPort.Parity = sPort.Parity;
-            F1.serialPort.StopBits = sPort.StopBits;
-            F1.serialPort.DataBits = sPort.DataBits;
-            F1.serialPort.Handshake = sPort.Handshake;
-            F1.serialPort.RtsEnable = sPort.RtsEnable;
+            F1.SerialPortSet(sPort);
             this.Hide();
         }
 
+        /// <summary>
+        /// If canceled, disregards any changes and closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Hide();

@@ -7,86 +7,113 @@ namespace SerialSuite
 {
     public partial class Form1 : Form
     {
-        Form2 F2 = new Form2();
-        public SerialPort serialPort = new SerialPort();
-        bool SerialPortPendingClose = false;
+        public SerialPort serialPort = new SerialPort();    //initialise serial port
+        bool SerialPortPendingClose = false;                //control serial ports access
 
         public Form1()
         {
             InitializeComponent();
-            //F2.Hide();          //hide "Options" window on startup
             InitSerial();       //create initial serialport values
             InitComboBoxPort(); //update combobox to show only connected ports
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-        
+
         }
 
+        /// <summary>
+        /// Use Form2's instance of a serialPort for types etc and copy values into primary serial port
+        /// </summary>
+        /// <param name="sPort"></param>
+        public void SerialPortSet(SerialPort sPort)
+        {
+            serialPort.Parity = sPort.Parity;
+            serialPort.StopBits = sPort.StopBits;
+            serialPort.DataBits = sPort.DataBits;
+            serialPort.Handshake = sPort.Handshake;
+            serialPort.RtsEnable = sPort.RtsEnable;
+        }
+
+        /// <summary>
+        /// When button start is pressed, continue to disable the start button and baud/port buttons.
+        /// Attempt read serial port that has been configured by the user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonStart_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("Start Pressed");
-            buttonPause.Enabled = true;
-            buttonStop.Enabled = true;
-            buttonStart.Enabled = false; //function button
-
-            comboBoxBaud.Enabled = false;
-            comboBoxPort.Enabled = false;
-            buttonOptions.Enabled = false;
-
+            DisableButtons("start");
             serialRead();
         }
 
-        //Stop/close serial connection
+        /// <summary>
+        /// When stop button is pressed, renable start and baud/port buttons.
+        /// Stop reading serial port data and close connections.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonStop_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("Stop Pressed");
-            buttonPause.Enabled = true;
-            buttonStart.Enabled = true;
-            buttonStop.Enabled = false; //function button
-
-            comboBoxBaud.Enabled = true;
-            comboBoxPort.Enabled = true;
-            buttonOptions.Enabled = true;
-
+            DisableButtons("stop");
             labelStatusMsg.Text = "Stopped";
 
             SerialPortPendingClose = true;
         }
 
-        //Pause incoming messages but don't stop/close connection
+        /// <summary>
+        /// When pause button is pressed, renable start button but keep port/baud locked as connection is not closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonPause_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("Pause Pressed");
-            buttonStart.Enabled = true;
-            buttonStop.Enabled = true;
-            buttonPause.Enabled = false; //function button
-
-            comboBoxBaud.Enabled = false;
-            comboBoxPort.Enabled = false;
-            buttonOptions.Enabled = false;
-
+            DisableButtons("pause");
             labelStatusMsg.Text = "Paused";
         }
 
+        /// <summary>
+        /// Options button opens a form2 instance and allows the user to edit more options in a new window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonOptions_Click(object sender, EventArgs e)
         {
+            Form2 F2 = new Form2(this);
             F2.Show();
         }
 
+        /// <summary>
+        /// Baud combo box allows the user to select from predefined baudrates to reduce any user error
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxBaud_SelectedIndexChanged(object sender, EventArgs e)
         {
             serialPort.BaudRate = int.Parse(comboBoxBaud.SelectedItem.ToString());
             Debug.WriteLine("Baudrate changed to: " + serialPort.BaudRate);
         }
 
+        /// <summary>
+        /// Port combo box is dynamic and adjusts to connected ports when the application is open
+        /// Selected serial port defaults to COM0 which may not be present
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxPort_SelectedIndexChanged(object sender, EventArgs e)
         {
             serialPort.PortName = (comboBoxPort.SelectedItem.ToString());
             Debug.WriteLine("Port changed to: " + serialPort.PortName);
         }
         
+        /// <summary>
+        /// SerialRead carries out the main logic behind reading the data.
+        /// Attempting to open the port with a try,catch is the first step
+        /// If ok, read data and translate. Else, alert user and renable buttons
+        /// </summary>
         private void serialRead()
         {
             serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
@@ -100,13 +127,14 @@ namespace SerialSuite
                 serialPort.Open();
                 labelStatusMsg.Text = "Connected to Port : " + serialPort.PortName + " Port";
             }
-            catch (Exception e) //throw excpetion for not found, alert user and close program
+            catch (Exception e) //throw excpetion for not found, alert user and reset butttons
             {
                 labelStatusMsg.Text = "No Serial Device detected on : " + serialPort.PortName;
                 buttonStart.Enabled = true;
                 comboBoxBaud.Enabled = true;
                 comboBoxPort.Enabled = true;
                 buttonOptions.Enabled = true;
+                serialPort.Close();
                 Debug.WriteLine(e);
             }
 
@@ -127,7 +155,10 @@ namespace SerialSuite
             }
         }
 
-        //Get serial data, convert to hex and upload into input data text box
+        /// <summary>
+        /// Update Hex utilises the tab view, by translating the raw data to hex and writes it to the textbot
+        /// </summary>
+        /// <param name="text"></param>
         private void UpdateHexText(string text)
         {
             if (this.textBoxHexView.InvokeRequired)
@@ -152,6 +183,10 @@ namespace SerialSuite
             }
         }
 
+        /// <summary>
+        /// Upate ASCII text utilises the tab view and the ASCII partition by translating the data into readable ASCII values
+        /// </summary>
+        /// <param name="hexString"></param>
         public void UpdateASCIIText(String hexString)
         {
             try
@@ -176,6 +211,9 @@ namespace SerialSuite
             }
         }
 
+        /// <summary>
+        /// Intialises the serial data ready for the user to edit
+        /// </summary>
         void InitSerial()
         {
             //Default Serial Info
@@ -188,6 +226,10 @@ namespace SerialSuite
             serialPort.RtsEnable = true;
         }
 
+        /// <summary>
+        /// Makes the port combo box dynamic rather than hvaing prestored indexes
+        /// Alerts the user if there are any devices connected
+        /// </summary>
         void InitComboBoxPort()
         {
             // Get a list of serial port names.
@@ -199,6 +241,51 @@ namespace SerialSuite
                 Debug.WriteLine(port);
                 comboBoxPort.Items.AddRange(ports);
                 comboBoxPort.Text = comboBoxPort.Items.Count.ToString() + " Port(s) found";
+            }
+        }
+
+        /// <summary>
+        /// Disable buttons contains the logic for disabling and enabling the correct buttons
+        /// So they can't be repeatedly pressed, reducing user error
+        /// </summary>
+        /// <param name="buttonClicked"></param>
+        void DisableButtons(String buttonClicked)
+        {
+            switch(buttonClicked)
+            {
+                case "start":
+                    //buttons
+                    buttonPause.Enabled = true;
+                    buttonStop.Enabled = true;
+                    buttonStart.Enabled = false;
+                    buttonOptions.Enabled = false;
+
+                    //combo boxes
+                    comboBoxBaud.Enabled = false;
+                    comboBoxPort.Enabled = false;
+                    break;
+                case "stop":
+                    //buttons
+                    buttonPause.Enabled = true;
+                    buttonStart.Enabled = true;
+                    buttonStop.Enabled = false;
+                    buttonOptions.Enabled = true;
+
+                    //combo boxes
+                    comboBoxBaud.Enabled = true;
+                    comboBoxPort.Enabled = true;
+                    break;
+                case "pause":
+                    //buttons
+                    buttonStart.Enabled = true;
+                    buttonStop.Enabled = true;
+                    buttonPause.Enabled = false;
+                    buttonOptions.Enabled = false;
+
+                    //combo boxes
+                    comboBoxBaud.Enabled = false;
+                    comboBoxPort.Enabled = false;
+                    break;
             }
         }
     }
