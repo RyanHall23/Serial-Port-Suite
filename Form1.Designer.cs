@@ -42,7 +42,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.textBoxHexView = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.textBoxASCIIViewer = new System.Windows.Forms.TextBox();
+            this.textBoxRawViewer = new System.Windows.Forms.TextBox();
             this.tabControlViewer.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -194,23 +194,23 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.textBoxASCIIViewer);
+            this.tabPage2.Controls.Add(this.textBoxRawViewer);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(768, 345);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "ASCII";
+            this.tabPage2.Text = "RAW";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // textBoxASCIIViewer
+            // textBoxRawViewer
             // 
-            this.textBoxASCIIViewer.Location = new System.Drawing.Point(7, 7);
-            this.textBoxASCIIViewer.Multiline = true;
-            this.textBoxASCIIViewer.Name = "textBoxASCIIViewer";
-            this.textBoxASCIIViewer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxASCIIViewer.Size = new System.Drawing.Size(755, 332);
-            this.textBoxASCIIViewer.TabIndex = 0;
+            this.textBoxRawViewer.Location = new System.Drawing.Point(7, 7);
+            this.textBoxRawViewer.Multiline = true;
+            this.textBoxRawViewer.Name = "textBoxRawViewer";
+            this.textBoxRawViewer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxRawViewer.Size = new System.Drawing.Size(755, 332);
+            this.textBoxRawViewer.TabIndex = 0;
             // 
             // Form1
             // 
@@ -257,7 +257,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TextBox textBoxHexView;
-        private System.Windows.Forms.TextBox textBoxASCIIViewer;
+        private System.Windows.Forms.TextBox textBoxRawViewer;
     }
 }
 
