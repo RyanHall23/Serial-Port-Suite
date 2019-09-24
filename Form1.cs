@@ -176,7 +176,7 @@ namespace SerialSuite
                     {
                         int value = Convert.ToInt32(_eachChar);
                         hexOutput += String.Format("{0:X} ", value);
-                        UpdateASCIIText(hexOutput);
+                        UpdateRawText(_eachChar);
                     }
                     this.textBoxHexView.Text += hexOutput.ToString();
                 }
@@ -187,23 +187,11 @@ namespace SerialSuite
         /// Upate ASCII text utilises the tab view and the ASCII partition by translating the data into readable ASCII values
         /// </summary>
         /// <param name="hexString"></param>
-        public void UpdateASCIIText(String hexString)
+        public void UpdateRawText(Char data)
         {
             try
             {
-                string ascii = string.Empty;
-
-                for (int i = 0; i < hexString.Length; i += 2)
-                {
-                    String hs = string.Empty;
-
-                    hs = hexString.Substring(i, 2);
-                    uint decval = System.Convert.ToUInt32(hs, 16);
-                    char character = System.Convert.ToChar(decval);
-                    ascii += character;
-                    textBoxASCIIViewer.Text += ascii;
-
-                }
+                textBoxRawViewer.Text += data;
             }
             catch (Exception ex)
             {
@@ -234,12 +222,11 @@ namespace SerialSuite
         {
             // Get a list of serial port names.
             string[] ports = SerialPort.GetPortNames();
-
+            comboBoxPort.Items.AddRange(ports);
             // Display each port name to the console.
             foreach (string port in ports)
             {
                 Debug.WriteLine(port);
-                comboBoxPort.Items.AddRange(ports);
                 comboBoxPort.Text = comboBoxPort.Items.Count.ToString() + " Port(s) found";
             }
         }
