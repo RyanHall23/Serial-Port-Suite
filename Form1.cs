@@ -28,11 +28,18 @@ namespace SerialSuite
         /// <param name="sPort"></param>
         public void SerialPortSet(SerialPort sPort)
         {
-            serialPort.Parity = sPort.Parity;
-            serialPort.StopBits = sPort.StopBits;
-            serialPort.DataBits = sPort.DataBits;
-            serialPort.Handshake = sPort.Handshake;
-            serialPort.RtsEnable = sPort.RtsEnable;
+            try
+            {
+                serialPort.Parity = sPort.Parity;
+                serialPort.StopBits = sPort.StopBits;
+                serialPort.DataBits = sPort.DataBits;
+                serialPort.Handshake = sPort.Handshake;
+                serialPort.RtsEnable = sPort.RtsEnable;
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -127,7 +134,7 @@ namespace SerialSuite
                 serialPort.Open();
                 labelStatusMsg.Text = "Connected to Port : " + serialPort.PortName + " Port";
             }
-            catch (Exception e) //throw excpetion for not found, alert user and reset butttons
+            catch (Exception ex) //throw excpetion for not found, alert user and reset butttons
             {
                 labelStatusMsg.Text = "No Serial Device detected on : " + serialPort.PortName;
                 buttonStart.Enabled = true;
@@ -135,7 +142,7 @@ namespace SerialSuite
                 comboBoxPort.Enabled = true;
                 buttonOptions.Enabled = true;
                 serialPort.Close();
-                Debug.WriteLine(e);
+                Debug.WriteLine(ex);
             }
 
             void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
@@ -161,30 +168,38 @@ namespace SerialSuite
         /// <param name="text"></param>
         private void UpdateHexText(string text)
         {
-            if (this.textBoxHexView.InvokeRequired)
+            try
             {
-                SetTextCallback d = new SetTextCallback(UpdateHexText);
-                this.Invoke(d, new object[] { text });
-            }
-            else
-            {
-                if(buttonPause.Enabled)
+                if (this.textBoxHexView.InvokeRequired)
                 {
-                    char[] charValues = text.ToCharArray();
-                    string hexOutput = "";
-                    foreach (char _eachChar in charValues)
+                    SetTextCallback d = new SetTextCallback(UpdateHexText);
+                    this.Invoke(d, new object[] { text });
+                }
+                else
+                {
+                    if (buttonPause.Enabled)
                     {
-                        int value = Convert.ToInt32(_eachChar);
-                        hexOutput += String.Format("{0:X} ", value);
-                        UpdateRawText(_eachChar);
+                        char[] charValues = text.ToCharArray();
+                        string hexOutput = "";
+                        foreach (char _eachChar in charValues)
+                        {
+                            int value = Convert.ToInt32(_eachChar);
+                            hexOutput += String.Format("{0:X} ", value);
+                            UpdateRawText(_eachChar);
+                        }
+                        this.textBoxHexView.Text += hexOutput.ToString();
                     }
-                    this.textBoxHexView.Text += hexOutput.ToString();
                 }
             }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
         }
 
         /// <summary>
-        /// Upate ASCII text utilises the tab view and the ASCII partition by translating the data into readable ASCII values
+        /// Updates the raw text box with the raw data directly from the serial connection
         /// </summary>
         /// <param name="hexString"></param>
         public void UpdateRawText(Char data)
@@ -204,14 +219,21 @@ namespace SerialSuite
         /// </summary>
         void InitSerial()
         {
-            //Default Serial Info
-            serialPort.PortName = "COM0";
-            serialPort.BaudRate = 125000;
-            serialPort.Parity = Parity.None;
-            serialPort.StopBits = StopBits.One;
-            serialPort.DataBits = 8;
-            serialPort.Handshake = Handshake.None;
-            serialPort.RtsEnable = true;
+            try
+            {
+                //Default Serial Info
+                serialPort.PortName = "COM0";
+                serialPort.BaudRate = 125000;
+                serialPort.Parity = Parity.None;
+                serialPort.StopBits = StopBits.One;
+                serialPort.DataBits = 8;
+                serialPort.Handshake = Handshake.None;
+                serialPort.RtsEnable = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -220,14 +242,21 @@ namespace SerialSuite
         /// </summary>
         void InitComboBoxPort()
         {
-            // Get a list of serial port names.
-            string[] ports = SerialPort.GetPortNames();
-            comboBoxPort.Items.AddRange(ports);
-            // Display each port name to the console.
-            foreach (string port in ports)
+            try
             {
-                Debug.WriteLine(port);
+                // Get a list of serial port names.
+                string[] ports = SerialPort.GetPortNames();
+                comboBoxPort.Items.AddRange(ports);
                 comboBoxPort.Text = comboBoxPort.Items.Count.ToString() + " Port(s) found";
+                // Display each port name to the console.
+                foreach (string port in ports)
+                {
+                    Debug.WriteLine(port);
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
             }
         }
 

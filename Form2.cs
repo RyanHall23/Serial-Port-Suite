@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace SerialSuite
 {
@@ -9,11 +12,26 @@ namespace SerialSuite
     {
         Form1 F1;       //initialises F1 variable
         SerialPort sPort = new SerialPort();    //used to copy create a template of the types
-
+        CurrentSettings userSettings;
+        string xmlFileName = "advancedSettings.xml";
+        
         public Form2()
         {
             InitializeComponent();
             this.Hide();
+            try
+            {
+                //SerializeDataRead(xmlFileName);
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+                userSettings.port.Parity = sPort.Parity;
+                userSettings.port.StopBits = sPort.StopBits;
+                userSettings.port.DataBits = sPort.DataBits;
+                userSettings.port.Handshake = sPort.Handshake;
+                userSettings.port.RtsEnable = sPort.RtsEnable;
+            }
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -21,6 +39,15 @@ namespace SerialSuite
 
         }
 
+        struct CurrentSettings
+        {
+            public string parity;
+            public string stopBits;
+            public string DataBits;
+            public string handshake;
+            public string requestToSend;
+            public SerialPort port;
+        }
         /// <summary>
         /// Allows for access to Form1 to save user changes to the serial port configuration
         /// </summary>
@@ -127,23 +154,27 @@ namespace SerialSuite
         /// <param name="e"></param>
         private void comboBoxHandshake_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (comboBoxStopBits.SelectedIndex)
+            switch (comboBoxHandshake.SelectedIndex)
             {
                 case 0:
                     sPort.Handshake = Handshake.None;
                     Debug.WriteLine("Handshake changed to None");
+                    comboBoxHandshake.Text = "None";
                     break;
                 case 1:
                     sPort.Handshake = Handshake.RequestToSend;
                     Debug.WriteLine("Handshake changed to RequestToSend");
+                    comboBoxHandshake.Text = "RequestToSend";
                     break;
                 case 2:
                     sPort.Handshake = Handshake.RequestToSendXOnXOff;
                     Debug.WriteLine("Handshake changed to RequestToSendXOnXOff");
+                    comboBoxHandshake.Text = "RequestToSendXOnXOff";
                     break;
                 case 3:
                     sPort.Handshake = Handshake.XOnXOff;
                     Debug.WriteLine("Handshake changed to XOnXOff");
+                    comboBoxHandshake.Text = "XOnXOff";
                     break;
             }
         }
@@ -175,8 +206,16 @@ namespace SerialSuite
         /// <param name="e"></param>
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
-            F1.SerialPortSet(sPort);
-            this.Hide();
+            try
+            {
+                F1.SerialPortSet(sPort);    // call set function and pass set version of serial port
+                //SerializeDataSet(xmlFileName);
+                this.Hide();                // close window
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -186,7 +225,53 @@ namespace SerialSuite
         /// <param name="e"></param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Hide();    //close window
         }
+
+        private void buttonDefault_Click(object sender, EventArgs e)
+        {
+            sPort.Parity = Parity.None;
+            sPort.StopBits = StopBits.One;
+            sPort.DataBits = 8;
+            sPort.Handshake = Handshake.None;
+            sPort.RtsEnable = true;
+            F1.SerialPortSet(sPort);
+            this.Hide();
+            //SerializeDataSet(xmlFileName);
+        }
+
+        private void SerializeDataSet(string filename)
+        {
+            XmlSerializer ser = new XmlSerializer(typeof(CurrentSettings));
+            DataSet ds = new DataSet("advDataSet");
+            DataTable t = new DataTable("table1");
+            DataColumn c = new DataColumn("setting");
+            t.Columns.Add(c);
+            ds.Tables.Add(t);
+            DataRow r;
+            //r = userSettings;
+            TextWriter writer = new StreamWriter(filename);
+            ser.Serialize(writer, ds);
+            writer.Close();
+        }
+
+        private void SerializeDataRead(string filename)
+        {
+            CurrentSettings myObject;
+            XmlSerializer mySerializer = new XmlSerializer(typeof(CurrentSettings));
+            FileStream myFileStream = new FileStream(filename, FileMode.Open);
+            myObject = (CurrentSettings)mySerializer.Deserialize(myFileStream);
+            userSettings = myObject;
+        }
+
+        private void SerDataWrite()
+        {
+
+        }
+
+        private void serDataLoad()
+        { 
+}
+        
     }
 }
