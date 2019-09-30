@@ -38,14 +38,11 @@
             this.labelPort = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.labelStatusMsg = new System.Windows.Forms.Label();
-            this.tabControlViewer = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.textBoxHexView = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.textBoxRawViewer = new System.Windows.Forms.TextBox();
-            this.tabControlViewer.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnHex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnRaw = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOptions
@@ -161,63 +158,43 @@
             this.labelStatusMsg.TabIndex = 10;
             this.labelStatusMsg.Text = "OK";
             // 
-            // tabControlViewer
+            // dataGridView1
             // 
-            this.tabControlViewer.Controls.Add(this.tabPage1);
-            this.tabControlViewer.Controls.Add(this.tabPage2);
-            this.tabControlViewer.Location = new System.Drawing.Point(12, 57);
-            this.tabControlViewer.Name = "tabControlViewer";
-            this.tabControlViewer.SelectedIndex = 0;
-            this.tabControlViewer.ShowToolTips = true;
-            this.tabControlViewer.Size = new System.Drawing.Size(776, 371);
-            this.tabControlViewer.TabIndex = 12;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnID,
+            this.ColumnHex,
+            this.ColumnRaw});
+            this.dataGridView1.Location = new System.Drawing.Point(12, 64);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(776, 364);
+            this.dataGridView1.TabIndex = 11;
             // 
-            // tabPage1
+            // ColumnID
             // 
-            this.tabPage1.Controls.Add(this.textBoxHexView);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(768, 345);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "HEX";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.ColumnID.HeaderText = "ID";
+            this.ColumnID.Name = "ColumnID";
+            this.ColumnID.ReadOnly = true;
             // 
-            // textBoxHexView
+            // ColumnHex
             // 
-            this.textBoxHexView.Location = new System.Drawing.Point(7, 7);
-            this.textBoxHexView.Multiline = true;
-            this.textBoxHexView.Name = "textBoxHexView";
-            this.textBoxHexView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxHexView.Size = new System.Drawing.Size(755, 332);
-            this.textBoxHexView.TabIndex = 0;
+            this.ColumnHex.HeaderText = "Hex";
+            this.ColumnHex.Name = "ColumnHex";
+            this.ColumnHex.ReadOnly = true;
+            this.ColumnHex.Width = 500;
             // 
-            // tabPage2
+            // ColumnRaw
             // 
-            this.tabPage2.Controls.Add(this.textBoxRawViewer);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(768, 345);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "RAW";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // textBoxRawViewer
-            // 
-            this.textBoxRawViewer.Location = new System.Drawing.Point(7, 7);
-            this.textBoxRawViewer.Multiline = true;
-            this.textBoxRawViewer.Name = "textBoxRawViewer";
-            this.textBoxRawViewer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxRawViewer.Size = new System.Drawing.Size(755, 332);
-            this.textBoxRawViewer.TabIndex = 0;
+            this.ColumnRaw.HeaderText = "Raw";
+            this.ColumnRaw.Name = "ColumnRaw";
+            this.ColumnRaw.ReadOnly = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.tabControlViewer);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.labelStatusMsg);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.labelPort);
@@ -231,11 +208,7 @@
             this.Name = "Form1";
             this.Text = "Serial Port Suite";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.tabControlViewer.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,11 +226,10 @@
         private System.Windows.Forms.Label labelPort;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Label labelStatusMsg;
-        private System.Windows.Forms.TabControl tabControlViewer;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TextBox textBoxHexView;
-        private System.Windows.Forms.TextBox textBoxRawViewer;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnHex;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnRaw;
     }
 }
 

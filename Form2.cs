@@ -248,7 +248,7 @@ namespace SerialSuite
             DataColumn c = new DataColumn("setting");
             t.Columns.Add(c);
             ds.Tables.Add(t);
-            DataRow r;
+            //DataRow r;
             //r = userSettings;
             TextWriter writer = new StreamWriter(filename);
             ser.Serialize(writer, ds);
