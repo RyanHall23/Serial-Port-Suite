@@ -8,13 +8,15 @@ namespace SerialSuite
     public partial class Form1 : Form
     {
         public SerialPort serialPort = new SerialPort();    //initialise serial port
-        bool SerialPortPendingClose = false;                //control serial ports access
+        int currentRow = 0;                                 //Update current row for displaying data
 
         public Form1()
         {
             InitializeComponent();
-            InitSerial();       //create initial serialport values
-            InitComboBoxPort(); //update combobox to show only connected ports
+            InitSerial();                   //create initial serialport values
+            InitComboBoxPort();             //update combobox to show only connected ports
+            buttonPause.Enabled = false;    //restrict user error
+            buttonStop.Enabled = false;     //restrict user error
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -67,7 +69,10 @@ namespace SerialSuite
             DisableButtons("stop");
             labelStatusMsg.Text = "Stopped";
 
-            SerialPortPendingClose = true;
+            serialPort.DiscardOutBuffer();
+            serialPort.DiscardInBuffer();
+            serialPort.Close();
+            serialPort.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
         }
 
         /// <summary>
@@ -144,50 +149,53 @@ namespace SerialSuite
                 serialPort.Close();
                 Debug.WriteLine(ex);
             }
+        }
 
-            void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
-            {
-                if(!SerialPortPendingClose)
-                {
-                    SerialPort sp = (SerialPort)sender;
-                    string inData = sp.ReadExisting();
-                    Debug.WriteLine("Data Received: " + inData);
+        /// <summary>
+        /// Handles data recieved from the serial port, and reads it. Which then moves onto the hex translation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort sp = (SerialPort)sender;
+            string inData = sp.ReadExisting();
+            Debug.WriteLine("Data Received: " + inData);
 
-                    UpdateHexText(inData);
-                }
-                else
-                {
-                    serialPort.Close();
-                }
-            }
+            UpdateHexText(inData);
         }
 
         /// <summary>
         /// Update Hex utilises the tab view, by translating the raw data to hex and writes it to the textbot
         /// </summary>
-        /// <param name="text"></param>
-        private void UpdateHexText(string text)
+        /// <param name="rawData"></param>
+        private void UpdateHexText(string rawData)
         {
             try
             {
-                if (this.textBoxHexView.InvokeRequired)
+                if (this.dataGridView1.InvokeRequired)
                 {
                     SetTextCallback d = new SetTextCallback(UpdateHexText);
-                    this.Invoke(d, new object[] { text });
+                    this.Invoke(d, new object[] { rawData });
                 }
                 else
                 {
                     if (buttonPause.Enabled)
                     {
-                        char[] charValues = text.ToCharArray();
+                        char[] charValues = rawData.ToCharArray();
                         string hexOutput = "";
                         foreach (char _eachChar in charValues)
                         {
                             int value = Convert.ToInt32(_eachChar);
                             hexOutput += String.Format("{0:X} ", value);
-                            UpdateRawText(_eachChar);
                         }
-                        this.textBoxHexView.Text += hexOutput.ToString();
+                        DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
+                        row.Cells[0].Value = currentRow;
+                        row.Cells[1].Value = hexOutput;
+                        row.Cells[2].Value = rawData;
+                        dataGridView1.Rows.Add(row);
+
+                        currentRow++;
                     }
                 }
             }
@@ -196,22 +204,6 @@ namespace SerialSuite
                 Debug.WriteLine(ex);
             }
 
-        }
-
-        /// <summary>
-        /// Updates the raw text box with the raw data directly from the serial connection
-        /// </summary>
-        /// <param name="hexString"></param>
-        public void UpdateRawText(Char data)
-        {
-            try
-            {
-                textBoxRawViewer.Text += data;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
 
         /// <summary>
