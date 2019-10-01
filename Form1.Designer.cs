@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.buttonOptions = new System.Windows.Forms.Button();
             this.comboBoxBaud = new System.Windows.Forms.ComboBox();
             this.comboBoxPort = new System.Windows.Forms.ComboBox();
@@ -38,22 +39,23 @@
             this.labelPort = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.labelStatusMsg = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.serialDataGridView = new System.Windows.Forms.DataGridView();
             this.ColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnHex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnRaw = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.buttonUpdatePorts = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.serialDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOptions
             // 
-            this.buttonOptions.Location = new System.Drawing.Point(666, 15);
+            this.buttonOptions.Location = new System.Drawing.Point(675, 13);
             this.buttonOptions.Name = "buttonOptions";
-            this.buttonOptions.Size = new System.Drawing.Size(122, 23);
+            this.buttonOptions.Size = new System.Drawing.Size(113, 23);
             this.buttonOptions.TabIndex = 6;
             this.buttonOptions.Text = "Advanced Options";
             this.buttonOptions.UseVisualStyleBackColor = true;
-            this.buttonOptions.Click += new System.EventHandler(this.buttonOptions_Click);
+            this.buttonOptions.Click += new System.EventHandler(this.ButtonOptions_Click);
             // 
             // comboBoxBaud
             // 
@@ -80,7 +82,7 @@
             this.comboBoxBaud.Size = new System.Drawing.Size(121, 21);
             this.comboBoxBaud.TabIndex = 0;
             this.comboBoxBaud.Text = "125000";
-            this.comboBoxBaud.SelectedIndexChanged += new System.EventHandler(this.comboBoxBaud_SelectedIndexChanged);
+            this.comboBoxBaud.SelectedIndexChanged += new System.EventHandler(this.ComboBoxBaud_SelectedIndexChanged);
             // 
             // comboBoxPort
             // 
@@ -90,7 +92,7 @@
             this.comboBoxPort.Size = new System.Drawing.Size(121, 21);
             this.comboBoxPort.TabIndex = 1;
             this.comboBoxPort.Text = "0 Port(s) found";
-            this.comboBoxPort.SelectedIndexChanged += new System.EventHandler(this.comboBoxPort_SelectedIndexChanged);
+            this.comboBoxPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxPort_SelectedIndexChanged);
             // 
             // buttonStop
             // 
@@ -100,7 +102,7 @@
             this.buttonStop.TabIndex = 2;
             this.buttonStop.Text = "Stop";
             this.buttonStop.UseVisualStyleBackColor = true;
-            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
+            this.buttonStop.Click += new System.EventHandler(this.ButtonStop_Click);
             // 
             // buttonStart
             // 
@@ -110,7 +112,7 @@
             this.buttonStart.TabIndex = 3;
             this.buttonStart.Text = "Start";
             this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            this.buttonStart.Click += new System.EventHandler(this.ButtonStart_Click);
             // 
             // buttonPause
             // 
@@ -120,7 +122,7 @@
             this.buttonPause.TabIndex = 4;
             this.buttonPause.Text = "Pause";
             this.buttonPause.UseVisualStyleBackColor = true;
-            this.buttonPause.Click += new System.EventHandler(this.buttonPause_Click);
+            this.buttonPause.Click += new System.EventHandler(this.ButtonPause_Click);
             // 
             // labelBaudrate
             // 
@@ -158,23 +160,30 @@
             this.labelStatusMsg.TabIndex = 10;
             this.labelStatusMsg.Text = "OK";
             // 
-            // dataGridView1
+            // serialDataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.serialDataGridView.AllowUserToDeleteRows = false;
+            this.serialDataGridView.AllowUserToResizeColumns = false;
+            this.serialDataGridView.AllowUserToResizeRows = false;
+            this.serialDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.serialDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.serialDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.serialDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnID,
             this.ColumnHex,
             this.ColumnRaw});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 64);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(776, 364);
-            this.dataGridView1.TabIndex = 11;
+            this.serialDataGridView.Location = new System.Drawing.Point(12, 64);
+            this.serialDataGridView.Name = "serialDataGridView";
+            this.serialDataGridView.RowHeadersVisible = false;
+            this.serialDataGridView.Size = new System.Drawing.Size(776, 364);
+            this.serialDataGridView.TabIndex = 11;
             // 
             // ColumnID
             // 
             this.ColumnID.HeaderText = "ID";
             this.ColumnID.Name = "ColumnID";
             this.ColumnID.ReadOnly = true;
+            this.ColumnID.Width = 50;
             // 
             // ColumnHex
             // 
@@ -188,13 +197,25 @@
             this.ColumnRaw.HeaderText = "Raw";
             this.ColumnRaw.Name = "ColumnRaw";
             this.ColumnRaw.ReadOnly = true;
+            this.ColumnRaw.Width = 222;
+            // 
+            // buttonUpdatePorts
+            // 
+            this.buttonUpdatePorts.Location = new System.Drawing.Point(557, 13);
+            this.buttonUpdatePorts.Name = "buttonUpdatePorts";
+            this.buttonUpdatePorts.Size = new System.Drawing.Size(99, 23);
+            this.buttonUpdatePorts.TabIndex = 12;
+            this.buttonUpdatePorts.Text = "Update Ports";
+            this.buttonUpdatePorts.UseVisualStyleBackColor = true;
+            this.buttonUpdatePorts.Click += new System.EventHandler(this.ButtonUpdatePorts_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.buttonUpdatePorts);
+            this.Controls.Add(this.serialDataGridView);
             this.Controls.Add(this.labelStatusMsg);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.labelPort);
@@ -205,10 +226,11 @@
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.comboBoxPort);
             this.Controls.Add(this.comboBoxBaud);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Serial Port Suite";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.serialDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,10 +248,11 @@
         private System.Windows.Forms.Label labelPort;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Label labelStatusMsg;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView serialDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnID;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnHex;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnRaw;
+        private System.Windows.Forms.Button buttonUpdatePorts;
     }
 }
 

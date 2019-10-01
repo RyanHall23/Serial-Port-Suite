@@ -15,7 +15,7 @@ namespace SerialSuite
             InitializeComponent();
             InitSerial();                   //create initial serialport values
             InitComboBoxPort();             //update combobox to show only connected ports
-            buttonPause.Enabled = false;    //restrict user error
+            buttonPause.Enabled = true;    //restrict user error
             buttonStop.Enabled = false;     //restrict user error
         }
 
@@ -50,11 +50,11 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonStart_Click(object sender, EventArgs e)
+        private void ButtonStart_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("Start Pressed");
             DisableButtons("start");
-            serialRead();
+            SerialRead();
         }
 
         /// <summary>
@@ -63,16 +63,24 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonStop_Click(object sender, EventArgs e)
+        private void ButtonStop_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("Stop Pressed");
             DisableButtons("stop");
             labelStatusMsg.Text = "Stopped";
 
-            serialPort.DiscardOutBuffer();
-            serialPort.DiscardInBuffer();
-            serialPort.Close();
-            serialPort.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
+            try
+            {
+                serialPort.DiscardOutBuffer();
+                serialPort.DiscardInBuffer();
+                serialPort.Close();
+                serialPort.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
         }
 
         /// <summary>
@@ -80,7 +88,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonPause_Click(object sender, EventArgs e)
+        private void ButtonPause_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("Pause Pressed");
             DisableButtons("pause");
@@ -92,10 +100,20 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonOptions_Click(object sender, EventArgs e)
+        private void ButtonOptions_Click(object sender, EventArgs e)
         {
             Form2 F2 = new Form2(this);
             F2.Show();
+        }
+
+        /// <summary>
+        /// Button Update Ports, will update any connected ports without the need to restart to the program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonUpdatePorts_Click(object sender, EventArgs e)
+        {
+            InitComboBoxPort();
         }
 
         /// <summary>
@@ -103,7 +121,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxBaud_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxBaud_SelectedIndexChanged(object sender, EventArgs e)
         {
             serialPort.BaudRate = int.Parse(comboBoxBaud.SelectedItem.ToString());
             Debug.WriteLine("Baudrate changed to: " + serialPort.BaudRate);
@@ -115,7 +133,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxPort_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxPort_SelectedIndexChanged(object sender, EventArgs e)
         {
             serialPort.PortName = (comboBoxPort.SelectedItem.ToString());
             Debug.WriteLine("Port changed to: " + serialPort.PortName);
@@ -126,7 +144,7 @@ namespace SerialSuite
         /// Attempting to open the port with a try,catch is the first step
         /// If ok, read data and translate. Else, alert user and renable buttons
         /// </summary>
-        private void serialRead()
+        private void SerialRead()
         {
             serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
 
@@ -166,14 +184,14 @@ namespace SerialSuite
         }
 
         /// <summary>
-        /// Update Hex utilises the tab view, by translating the raw data to hex and writes it to the textbot
+        /// Updates the incremental ID, data Hex, and data Raw columns respectively
         /// </summary>
         /// <param name="rawData"></param>
         private void UpdateHexText(string rawData)
         {
             try
             {
-                if (this.dataGridView1.InvokeRequired)
+                if (this.serialDataGridView.InvokeRequired)
                 {
                     SetTextCallback d = new SetTextCallback(UpdateHexText);
                     this.Invoke(d, new object[] { rawData });
@@ -189,11 +207,12 @@ namespace SerialSuite
                             int value = Convert.ToInt32(_eachChar);
                             hexOutput += String.Format("{0:X} ", value);
                         }
-                        DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
+                        
+                        DataGridViewRow row = (DataGridViewRow)serialDataGridView.Rows[0].Clone();
                         row.Cells[0].Value = currentRow;
                         row.Cells[1].Value = hexOutput;
                         row.Cells[2].Value = rawData;
-                        dataGridView1.Rows.Add(row);
+                        serialDataGridView.Rows.Add(row);
 
                         currentRow++;
                     }
@@ -234,6 +253,8 @@ namespace SerialSuite
         /// </summary>
         void InitComboBoxPort()
         {
+            comboBoxPort.Items.Clear();
+
             try
             {
                 // Get a list of serial port names.
@@ -267,6 +288,7 @@ namespace SerialSuite
                     buttonStop.Enabled = true;
                     buttonStart.Enabled = false;
                     buttonOptions.Enabled = false;
+                    buttonUpdatePorts.Enabled = false;
 
                     //combo boxes
                     comboBoxBaud.Enabled = false;
@@ -278,6 +300,7 @@ namespace SerialSuite
                     buttonStart.Enabled = true;
                     buttonStop.Enabled = false;
                     buttonOptions.Enabled = true;
+                    buttonUpdatePorts.Enabled = true;
 
                     //combo boxes
                     comboBoxBaud.Enabled = true;
@@ -296,6 +319,7 @@ namespace SerialSuite
                     break;
             }
         }
+
     }
 }
 
