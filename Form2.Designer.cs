@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.label1 = new System.Windows.Forms.Label();
             this.labelParity = new System.Windows.Forms.Label();
             this.comboBoxParity = new System.Windows.Forms.ComboBox();
@@ -75,7 +76,7 @@
             this.comboBoxParity.Size = new System.Drawing.Size(120, 21);
             this.comboBoxParity.TabIndex = 2;
             this.comboBoxParity.Text = "None";
-            this.comboBoxParity.SelectedIndexChanged += new System.EventHandler(this.comboBoxParity_SelectedIndexChanged);
+            this.comboBoxParity.SelectedIndexChanged += new System.EventHandler(this.ComboBoxParity_SelectedIndexChanged);
             // 
             // labelRTS
             // 
@@ -131,7 +132,7 @@
             this.comboBoxStopBits.Size = new System.Drawing.Size(120, 21);
             this.comboBoxStopBits.TabIndex = 7;
             this.comboBoxStopBits.Text = "1";
-            this.comboBoxStopBits.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopBits_SelectedIndexChanged);
+            this.comboBoxStopBits.SelectedIndexChanged += new System.EventHandler(this.ComboBoxStopBits_SelectedIndexChanged);
             // 
             // comboBoxRTS
             // 
@@ -144,7 +145,7 @@
             this.comboBoxRTS.Size = new System.Drawing.Size(120, 21);
             this.comboBoxRTS.TabIndex = 8;
             this.comboBoxRTS.Text = "True";
-            this.comboBoxRTS.SelectedIndexChanged += new System.EventHandler(this.comboBoxRTS_SelectedIndexChanged);
+            this.comboBoxRTS.SelectedIndexChanged += new System.EventHandler(this.ComboBoxRTS_SelectedIndexChanged);
             // 
             // comboBoxHandshake
             // 
@@ -159,7 +160,7 @@
             this.comboBoxHandshake.Size = new System.Drawing.Size(120, 21);
             this.comboBoxHandshake.TabIndex = 9;
             this.comboBoxHandshake.Text = "None";
-            this.comboBoxHandshake.SelectedIndexChanged += new System.EventHandler(this.comboBoxHandshake_SelectedIndexChanged);
+            this.comboBoxHandshake.SelectedIndexChanged += new System.EventHandler(this.ComboBoxHandshake_SelectedIndexChanged);
             // 
             // comboBoxDataBits
             // 
@@ -174,7 +175,7 @@
             this.comboBoxDataBits.Size = new System.Drawing.Size(120, 21);
             this.comboBoxDataBits.TabIndex = 10;
             this.comboBoxDataBits.Text = "8";
-            this.comboBoxDataBits.SelectedIndexChanged += new System.EventHandler(this.comboBoxDataBits_SelectedIndexChanged);
+            this.comboBoxDataBits.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDataBits_SelectedIndexChanged);
             // 
             // buttonConfirm
             // 
@@ -184,7 +185,7 @@
             this.buttonConfirm.TabIndex = 11;
             this.buttonConfirm.Text = "Confirm";
             this.buttonConfirm.UseVisualStyleBackColor = true;
-            this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
+            this.buttonConfirm.Click += new System.EventHandler(this.ButtonConfirm_Click);
             // 
             // buttonCancel
             // 
@@ -194,7 +195,7 @@
             this.buttonCancel.TabIndex = 12;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // buttonDefault
             // 
@@ -204,7 +205,7 @@
             this.buttonDefault.TabIndex = 13;
             this.buttonDefault.Text = "Reset to Default";
             this.buttonDefault.UseVisualStyleBackColor = true;
-            this.buttonDefault.Click += new System.EventHandler(this.buttonDefault_Click);
+            this.buttonDefault.Click += new System.EventHandler(this.ButtonDefault_Click);
             // 
             // Form2
             // 
@@ -225,6 +226,7 @@
             this.Controls.Add(this.comboBoxParity);
             this.Controls.Add(this.labelParity);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form2";
             this.Text = "Advanced Options";
             this.Load += new System.EventHandler(this.Form2_Load);

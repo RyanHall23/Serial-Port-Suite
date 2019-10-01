@@ -12,26 +12,13 @@ namespace SerialSuite
     {
         Form1 F1;       //initialises F1 variable
         SerialPort sPort = new SerialPort();    //used to copy create a template of the types
-        CurrentSettings userSettings;
-        string xmlFileName = "advancedSettings.xml";
+        //CurrentSettings userSettings;
+       //string xmlFileName = "advancedSettings.xml";
         
         public Form2()
         {
             InitializeComponent();
             this.Hide();
-            try
-            {
-                //SerializeDataRead(xmlFileName);
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex);
-                userSettings.port.Parity = sPort.Parity;
-                userSettings.port.StopBits = sPort.StopBits;
-                userSettings.port.DataBits = sPort.DataBits;
-                userSettings.port.Handshake = sPort.Handshake;
-                userSettings.port.RtsEnable = sPort.RtsEnable;
-            }
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -39,15 +26,6 @@ namespace SerialSuite
 
         }
 
-        struct CurrentSettings
-        {
-            public string parity;
-            public string stopBits;
-            public string DataBits;
-            public string handshake;
-            public string requestToSend;
-            public SerialPort port;
-        }
         /// <summary>
         /// Allows for access to Form1 to save user changes to the serial port configuration
         /// </summary>
@@ -64,7 +42,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxParity_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxParity_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxParity.SelectedIndex)
             {
@@ -96,7 +74,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxStopBits_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxStopBits_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxStopBits.SelectedIndex)
             {
@@ -124,7 +102,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxDataBits_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxDataBits_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxStopBits.SelectedIndex)
             {
@@ -152,7 +130,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxHandshake_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxHandshake_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxHandshake.SelectedIndex)
             {
@@ -184,7 +162,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxRTS_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxRTS_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxRTS.SelectedIndex)
             {
@@ -204,7 +182,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonConfirm_Click(object sender, EventArgs e)
+        private void ButtonConfirm_Click(object sender, EventArgs e)
         {
             try
             {
@@ -223,12 +201,12 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             this.Hide();    //close window
         }
 
-        private void buttonDefault_Click(object sender, EventArgs e)
+        private void ButtonDefault_Click(object sender, EventArgs e)
         {
             sPort.Parity = Parity.None;
             sPort.StopBits = StopBits.One;
@@ -238,6 +216,17 @@ namespace SerialSuite
             F1.SerialPortSet(sPort);
             this.Hide();
             //SerializeDataSet(xmlFileName);
+        }
+
+        /*
+        struct CurrentSettings
+        {
+            public string parity;
+            public string stopBits;
+            public string DataBits;
+            public string handshake;
+            public string requestToSend;
+            public SerialPort port;
         }
 
         private void SerializeDataSet(string filename)
@@ -270,8 +259,9 @@ namespace SerialSuite
         }
 
         private void serDataLoad()
-        { 
-}
+        {
         
+`       }
+        */
     }
 }
