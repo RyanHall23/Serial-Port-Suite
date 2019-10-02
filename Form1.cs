@@ -117,6 +117,19 @@ namespace SerialSuite
         }
 
         /// <summary>
+        /// Button clear is used to clear the table so the user does not need to restart to the program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonClear_Click(object sender, EventArgs e)
+        {
+            serialDataGridView.Rows.Clear();
+            serialDataGridView.Refresh();
+            currentRow = 0;
+
+        }
+
+        /// <summary>
         /// Baud combo box allows the user to select from predefined baudrates to reduce any user error
         /// </summary>
         /// <param name="sender"></param>
@@ -146,16 +159,14 @@ namespace SerialSuite
         /// </summary>
         private void SerialRead()
         {
-            serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-
             serialPort.Close();
-
             Debug.WriteLine("Opening Serial Port...");
 
             try //Check if COM port can be opened
             {
                 serialPort.Open();
                 labelStatusMsg.Text = "Connected to Port : " + serialPort.PortName + " Port";
+                serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
             }
             catch (Exception ex) //throw excpetion for not found, alert user and reset butttons
             {
@@ -164,6 +175,7 @@ namespace SerialSuite
                 comboBoxBaud.Enabled = true;
                 comboBoxPort.Enabled = true;
                 buttonOptions.Enabled = true;
+                buttonUpdatePorts.Enabled = true;
                 serialPort.Close();
                 Debug.WriteLine(ex);
             }
@@ -198,24 +210,22 @@ namespace SerialSuite
                 }
                 else
                 {
-                    if (buttonPause.Enabled)
+                    char[] charValues = rawData.ToCharArray();
+                    string hexOutput = "";
+                    foreach (char _eachChar in charValues)
                     {
-                        char[] charValues = rawData.ToCharArray();
-                        string hexOutput = "";
-                        foreach (char _eachChar in charValues)
-                        {
-                            int value = Convert.ToInt32(_eachChar);
-                            hexOutput += String.Format("{0:X} ", value);
-                        }
-                        
-                        DataGridViewRow row = (DataGridViewRow)serialDataGridView.Rows[0].Clone();
-                        row.Cells[0].Value = currentRow;
-                        row.Cells[1].Value = hexOutput;
-                        row.Cells[2].Value = rawData;
-                        serialDataGridView.Rows.Add(row);
-
-                        currentRow++;
+                        int value = Convert.ToInt32(_eachChar);
+                        hexOutput += String.Format("{0:X} ", value);
                     }
+
+                    DataGridViewRow row = (DataGridViewRow)serialDataGridView.Rows[0].Clone();
+                    row.Cells[0].Value = currentRow;
+                    row.Cells[1].Value = serialPort.PortName;
+                    row.Cells[2].Value = hexOutput;
+                    row.Cells[3].Value = rawData;
+                    serialDataGridView.Rows.Add(row);
+
+                    currentRow++;
                 }
             }
             catch(Exception ex)
