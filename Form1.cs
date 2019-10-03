@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
 
 namespace SerialSuite
 {
@@ -217,14 +219,13 @@ namespace SerialSuite
                         int value = Convert.ToInt32(_eachChar);
                         hexOutput += String.Format("{0:X} ", value);
                     }
-
+                    
                     DataGridViewRow row = (DataGridViewRow)serialDataGridView.Rows[0].Clone();
                     row.Cells[0].Value = currentRow;
                     row.Cells[1].Value = serialPort.PortName;
                     row.Cells[2].Value = hexOutput;
                     row.Cells[3].Value = rawData;
                     serialDataGridView.Rows.Add(row);
-
                     currentRow++;
                 }
             }
@@ -330,6 +331,33 @@ namespace SerialSuite
             }
         }
 
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                serialDataGridView.SelectAll();
+                DataObject dataObj = serialDataGridView.GetClipboardContent();
+                if (dataObj != null)
+                    Clipboard.SetDataObject(dataObj);
+
+                Microsoft.Office.Interop.Excel.Application xlexcel;
+                Microsoft.Office.Interop.Excel.Workbook xlWorkBook;
+                Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet;
+                object misValue = System.Reflection.Missing.Value;
+                xlexcel = new Excel.Application();
+                xlexcel.Visible = true;
+                xlWorkBook = xlexcel.Workbooks.Add(misValue);
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+                Excel.Range CR = (Excel.Range)xlWorkSheet.Cells[1, 1];
+                CR.Select();
+                xlWorkSheet.PasteSpecial(CR, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
+        }
     }
 }
 
