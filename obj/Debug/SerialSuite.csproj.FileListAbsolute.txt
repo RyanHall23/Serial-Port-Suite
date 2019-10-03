@@ -9,3 +9,4 @@ D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\Seria
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.exe
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.pdb
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.csprojAssemblyReference.cache
+D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.csproj.ResolveComReference.cache

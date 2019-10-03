@@ -40,22 +40,23 @@
             this.labelStatus = new System.Windows.Forms.Label();
             this.labelStatusMsg = new System.Windows.Forms.Label();
             this.serialDataGridView = new System.Windows.Forms.DataGridView();
-            this.buttonUpdatePorts = new System.Windows.Forms.Button();
-            this.buttonClear = new System.Windows.Forms.Button();
             this.ColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnHex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnRaw = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonUpdatePorts = new System.Windows.Forms.Button();
+            this.buttonClear = new System.Windows.Forms.Button();
+            this.buttonExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.serialDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOptions
             // 
-            this.buttonOptions.Location = new System.Drawing.Point(675, 13);
+            this.buttonOptions.Location = new System.Drawing.Point(689, 1);
             this.buttonOptions.Name = "buttonOptions";
-            this.buttonOptions.Size = new System.Drawing.Size(113, 23);
+            this.buttonOptions.Size = new System.Drawing.Size(99, 23);
             this.buttonOptions.TabIndex = 6;
-            this.buttonOptions.Text = "Advanced Options";
+            this.buttonOptions.Text = "Options";
             this.buttonOptions.UseVisualStyleBackColor = true;
             this.buttonOptions.Click += new System.EventHandler(this.ButtonOptions_Click);
             // 
@@ -181,26 +182,6 @@
             this.serialDataGridView.Size = new System.Drawing.Size(776, 364);
             this.serialDataGridView.TabIndex = 11;
             // 
-            // buttonUpdatePorts
-            // 
-            this.buttonUpdatePorts.Location = new System.Drawing.Point(554, 28);
-            this.buttonUpdatePorts.Name = "buttonUpdatePorts";
-            this.buttonUpdatePorts.Size = new System.Drawing.Size(99, 23);
-            this.buttonUpdatePorts.TabIndex = 12;
-            this.buttonUpdatePorts.Text = "Update Ports";
-            this.buttonUpdatePorts.UseVisualStyleBackColor = true;
-            this.buttonUpdatePorts.Click += new System.EventHandler(this.ButtonUpdatePorts_Click);
-            // 
-            // buttonClear
-            // 
-            this.buttonClear.Location = new System.Drawing.Point(554, 1);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(99, 23);
-            this.buttonClear.TabIndex = 13;
-            this.buttonClear.Text = "Clear";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.ButtonClear_Click);
-            // 
             // ColumnID
             // 
             this.ColumnID.HeaderText = "ID";
@@ -229,11 +210,42 @@
             this.ColumnRaw.ReadOnly = true;
             this.ColumnRaw.Width = 222;
             // 
+            // buttonUpdatePorts
+            // 
+            this.buttonUpdatePorts.Location = new System.Drawing.Point(568, 28);
+            this.buttonUpdatePorts.Name = "buttonUpdatePorts";
+            this.buttonUpdatePorts.Size = new System.Drawing.Size(99, 23);
+            this.buttonUpdatePorts.TabIndex = 12;
+            this.buttonUpdatePorts.Text = "Update Ports";
+            this.buttonUpdatePorts.UseVisualStyleBackColor = true;
+            this.buttonUpdatePorts.Click += new System.EventHandler(this.ButtonUpdatePorts_Click);
+            // 
+            // buttonClear
+            // 
+            this.buttonClear.Location = new System.Drawing.Point(568, 1);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(99, 23);
+            this.buttonClear.TabIndex = 13;
+            this.buttonClear.Text = "Clear";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.ButtonClear_Click);
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.Location = new System.Drawing.Point(689, 28);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(99, 23);
+            this.buttonExport.TabIndex = 14;
+            this.buttonExport.Text = "Export To Excel";
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonExport);
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.buttonUpdatePorts);
             this.Controls.Add(this.serialDataGridView);
@@ -276,6 +288,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPort;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnHex;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnRaw;
+        private System.Windows.Forms.Button buttonExport;
     }
 }
 
