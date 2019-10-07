@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
+using System.Text;
 
 namespace SerialSuite
 {
@@ -39,6 +40,7 @@ namespace SerialSuite
                 serialPort.DataBits = sPort.DataBits;
                 serialPort.Handshake = sPort.Handshake;
                 serialPort.RtsEnable = sPort.RtsEnable;
+                serialPort.Encoding = sPort.Encoding;
             }
             catch(Exception ex)
             {
@@ -192,6 +194,7 @@ namespace SerialSuite
         {
             SerialPort sp = (SerialPort)sender;
             string inData = sp.ReadExisting();
+            
             Debug.WriteLine("Data Received: " + inData);
 
             UpdateHexText(inData);
@@ -251,6 +254,7 @@ namespace SerialSuite
                 serialPort.DataBits = 8;
                 serialPort.Handshake = Handshake.None;
                 serialPort.RtsEnable = true;
+                serialPort.Encoding = Encoding.GetEncoding("iso-8859-1");
             }
             catch (Exception ex)
             {
@@ -331,7 +335,7 @@ namespace SerialSuite
             }
         }
 
-        private void buttonExport_Click(object sender, EventArgs e)
+        private void ButtonExport_Click(object sender, EventArgs e)
         {
             try
             {

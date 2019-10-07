@@ -3,6 +3,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -217,6 +218,13 @@ namespace SerialSuite
             this.Hide();
             //SerializeDataSet(xmlFileName);
         }
+
+        private void ComboBoxEncoding_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string encoding = comboBoxEncoding.Text;
+            sPort.Encoding = Encoding.GetEncoding(encoding);
+            Debug.WriteLine("Encoding changed to: " + comboBoxEncoding.Text)
+;       }
 
         /*
         struct CurrentSettings

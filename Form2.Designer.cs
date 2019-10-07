@@ -43,6 +43,8 @@
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonDefault = new System.Windows.Forms.Button();
+            this.labelEncoding = new System.Windows.Forms.Label();
+            this.comboBoxEncoding = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -179,7 +181,7 @@
             // 
             // buttonConfirm
             // 
-            this.buttonConfirm.Location = new System.Drawing.Point(245, 240);
+            this.buttonConfirm.Location = new System.Drawing.Point(245, 280);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(75, 23);
             this.buttonConfirm.TabIndex = 11;
@@ -189,7 +191,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(15, 240);
+            this.buttonCancel.Location = new System.Drawing.Point(18, 280);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 12;
@@ -199,7 +201,7 @@
             // 
             // buttonDefault
             // 
-            this.buttonDefault.Location = new System.Drawing.Point(110, 270);
+            this.buttonDefault.Location = new System.Drawing.Point(111, 280);
             this.buttonDefault.Name = "buttonDefault";
             this.buttonDefault.Size = new System.Drawing.Size(114, 23);
             this.buttonDefault.TabIndex = 13;
@@ -207,11 +209,38 @@
             this.buttonDefault.UseVisualStyleBackColor = true;
             this.buttonDefault.Click += new System.EventHandler(this.ButtonDefault_Click);
             // 
+            // labelEncoding
+            // 
+            this.labelEncoding.AutoSize = true;
+            this.labelEncoding.Cursor = System.Windows.Forms.Cursors.Default;
+            this.labelEncoding.Location = new System.Drawing.Point(18, 240);
+            this.labelEncoding.Name = "labelEncoding";
+            this.labelEncoding.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelEncoding.Size = new System.Drawing.Size(52, 13);
+            this.labelEncoding.TabIndex = 15;
+            this.labelEncoding.Text = "Encoding";
+            // 
+            // comboBoxEncoding
+            // 
+            this.comboBoxEncoding.FormattingEnabled = true;
+            this.comboBoxEncoding.Items.AddRange(new object[] {
+            "iso-8859-1",
+            "unicode",
+            "ascii"});
+            this.comboBoxEncoding.Location = new System.Drawing.Point(200, 240);
+            this.comboBoxEncoding.Name = "comboBoxEncoding";
+            this.comboBoxEncoding.Size = new System.Drawing.Size(120, 21);
+            this.comboBoxEncoding.TabIndex = 16;
+            this.comboBoxEncoding.Text = "iso-8859-1";
+            this.comboBoxEncoding.SelectedIndexChanged += new System.EventHandler(this.ComboBoxEncoding_SelectedIndexChanged);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 311);
+            this.ClientSize = new System.Drawing.Size(334, 314);
+            this.Controls.Add(this.comboBoxEncoding);
+            this.Controls.Add(this.labelEncoding);
             this.Controls.Add(this.buttonDefault);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonConfirm);
@@ -251,5 +280,7 @@
         private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonDefault;
+        private System.Windows.Forms.Label labelEncoding;
+        private System.Windows.Forms.ComboBox comboBoxEncoding;
     }
 }

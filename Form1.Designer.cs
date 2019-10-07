@@ -238,7 +238,7 @@
             this.buttonExport.TabIndex = 14;
             this.buttonExport.Text = "Export To Excel";
             this.buttonExport.UseVisualStyleBackColor = true;
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            this.buttonExport.Click += new System.EventHandler(this.ButtonExport_Click);
             // 
             // Form1
             // 
