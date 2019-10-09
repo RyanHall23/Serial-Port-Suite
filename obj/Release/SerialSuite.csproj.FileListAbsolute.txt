@@ -1,7 +1,7 @@
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\bin\Release\SerialSuite.exe.config
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\bin\Release\SerialSuite.exe
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\bin\Release\SerialSuite.pdb
-D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.csprojAssemblyReference.cache
+D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.csproj.ResolveComReference.cache
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.Form1.resources
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.Form2.resources
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.Properties.Resources.resources
