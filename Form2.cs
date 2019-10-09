@@ -6,16 +6,18 @@ using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Web.Script.Serialization;
 
 namespace SerialSuite
 {
     public partial class Form2 : Form
     {
-        Form1 F1;       //initialises F1 variable
-        SerialPort sPort = new SerialPort();    //used to copy create a template of the types
-        //CurrentSettings userSettings;
-       //string xmlFileName = "advancedSettings.xml";
-        
+        Form1 F1;                               // Initialises F1 form
+        SerialPort sPort = new SerialPort();    // Used to copy create a template of the types
+        UserSettings US = new UserSettings();   // Creates an object to persist serial port settings
+
+
+
         public Form2()
         {
             InitializeComponent();
@@ -35,8 +37,34 @@ namespace SerialSuite
         {
             F1 = callingForm as Form1;
             InitializeComponent();
+            try
+            {
+                US = ReadConfig();  // Attempt to read current serial port config
+                CopyStoredSettings();    // Write settings to application
+                UpdateTextBoxes();  // Update text boxes in advanced options window
+            }
+            catch(Exception ex)
+            {
+                Debug.Write(ex);
+                DefaultSettings();  // Config is non-existent, set to defaults
+                StoreSettings();     // Copy default settings to peristence class
+                WriteConfig(US);    // Write persistance class to disk
+            }
         }
 
+        /// <summary>
+        /// Class for persisting serial port settings
+        /// </summary>
+        [Serializable]
+        public class UserSettings
+        {
+            public Handshake handshake;
+            public Parity parity;
+            public StopBits stopBits;
+            public int dataBits;
+            public bool rtsEnabled;
+            public Encoding encoding;
+        }
 
         /// <summary>
         /// Updates the parity selection from predefined valid options
@@ -90,10 +118,6 @@ namespace SerialSuite
                 case 2:
                     sPort.StopBits = StopBits.Two;
                     Debug.WriteLine("Parity changed to 2");
-                    break;
-                case 3:
-                    sPort.StopBits = StopBits.None;
-                    Debug.WriteLine("Parity changed to None");
                     break;
             }
         }
@@ -159,23 +183,36 @@ namespace SerialSuite
         }
 
         /// <summary>
-        /// Updates the RTS setting from valid options
+        /// For changing the encoding type of the serial port
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ComboBoxRTS_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxEncoding_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (comboBoxRTS.SelectedIndex)
-            {
-                case 0:
-                    sPort.RtsEnable = true;
-                    Debug.WriteLine("RTS changed to TRUE");
-                    break;
-                case 1:
-                    sPort.RtsEnable = false;
-                    Debug.WriteLine("RTS changed to FALSE");
-                    break;
-            }
+            string currentEncoding = comboBoxEncoding.Text;
+            sPort.Encoding = Encoding.GetEncoding(currentEncoding);
+        }
+
+        /// <summary>
+        /// Sets RTS enabled to true via radio button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radioButtonRTStrue_CheckedChanged(object sender, EventArgs e)
+        {
+            sPort.RtsEnable = true;
+            Debug.WriteLine("RTS changed to " + sPort.RtsEnable.ToString());
+        }
+
+        /// <summary>
+        /// Sets RTS enabled to false via radio button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radioButtonRTSfalse_CheckedChanged(object sender, EventArgs e)
+        {
+            sPort.RtsEnable = false;
+            Debug.WriteLine("RTS changed to " + sPort.RtsEnable.ToString());
         }
 
         /// <summary>
@@ -188,7 +225,9 @@ namespace SerialSuite
             try
             {
                 F1.SerialPortSet(sPort);    // call set function and pass set version of serial port
-                //SerializeDataSet(xmlFileName);
+                StoreSettings();
+                WriteConfig(US);
+                Debug.WriteLine("Settings Confrimed");
                 this.Hide();                // close window
             }
             catch(Exception ex)
@@ -204,72 +243,149 @@ namespace SerialSuite
         /// <param name="e"></param>
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
+            Debug.WriteLine("Changes Cancelled");
             this.Hide();    //close window
         }
 
+        /// <summary>
+        /// Sets serial port settings to default
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonDefault_Click(object sender, EventArgs e)
+        {
+            DefaultSettings();
+            F1.SerialPortSet(sPort);
+            StoreSettings();
+            WriteConfig(US);
+            Debug.WriteLine("Settings set to default");
+            this.Hide();
+        }
+
+        /// <summary>
+        /// Writes the persistance class object UserSettings to disk for next instance of menu or startup
+        /// </summary>
+        /// <param name="port"></param>
+        public static void WriteConfig(UserSettings port)
+        {
+            string dir = @".\";
+            string serializationFile = Path.Combine(dir, "sps.bin");
+
+            //serialize
+            using (Stream stream = File.Open(serializationFile, FileMode.Create))
+            {
+                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                bformatter.Serialize(stream, port);
+            }
+
+        }
+
+        /// <summary>
+        /// Reads stored peristance on disk and returns the object
+        /// </summary>
+        /// <returns></returns>
+        public UserSettings ReadConfig()
+        {
+            string dir = @".\";
+            string serializationFile = Path.Combine(dir, "sps.bin");
+            UserSettings savedPort;
+
+            using (Stream stream = File.Open(serializationFile, FileMode.Open))
+            {
+                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                savedPort = (UserSettings)bformatter.Deserialize(stream);
+            }
+            return savedPort;
+        }
+
+        /// <summary>
+        /// Copies settings from the read persistance class on disk to the serial port object
+        /// </summary>
+        public void StoreSettings()
+        {
+            US.parity = sPort.Parity;
+            US.stopBits = sPort.StopBits;
+            US.dataBits = sPort.DataBits;
+            US.handshake = sPort.Handshake;
+            US.rtsEnabled = sPort.RtsEnable;
+            US.encoding = sPort.Encoding;
+        }
+
+        /// <summary>
+        /// Sets the serial port object back to "default"
+        /// </summary>
+        public void DefaultSettings()
         {
             sPort.Parity = Parity.None;
             sPort.StopBits = StopBits.One;
             sPort.DataBits = 8;
             sPort.Handshake = Handshake.None;
             sPort.RtsEnable = true;
-            F1.SerialPortSet(sPort);
-            this.Hide();
-            //SerializeDataSet(xmlFileName);
+            sPort.Encoding = Encoding.GetEncoding("iso-8859-1");
         }
-
-        private void ComboBoxEncoding_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string encoding = comboBoxEncoding.Text;
-            sPort.Encoding = Encoding.GetEncoding(encoding);
-            Debug.WriteLine("Encoding changed to: " + comboBoxEncoding.Text)
-;       }
-
-        /*
-        struct CurrentSettings
-        {
-            public string parity;
-            public string stopBits;
-            public string DataBits;
-            public string handshake;
-            public string requestToSend;
-            public SerialPort port;
-        }
-
-        private void SerializeDataSet(string filename)
-        {
-            XmlSerializer ser = new XmlSerializer(typeof(CurrentSettings));
-            DataSet ds = new DataSet("advDataSet");
-            DataTable t = new DataTable("table1");
-            DataColumn c = new DataColumn("setting");
-            t.Columns.Add(c);
-            ds.Tables.Add(t);
-            //DataRow r;
-            //r = userSettings;
-            TextWriter writer = new StreamWriter(filename);
-            ser.Serialize(writer, ds);
-            writer.Close();
-        }
-
-        private void SerializeDataRead(string filename)
-        {
-            CurrentSettings myObject;
-            XmlSerializer mySerializer = new XmlSerializer(typeof(CurrentSettings));
-            FileStream myFileStream = new FileStream(filename, FileMode.Open);
-            myObject = (CurrentSettings)mySerializer.Deserialize(myFileStream);
-            userSettings = myObject;
-        }
-
-        private void SerDataWrite()
-        {
-
-        }
-
-        private void serDataLoad()
-        {
         
-`       }
-        */
+        /// <summary>
+        /// Writes settings from the serial port to the peristance class object
+        /// </summary>
+        public void CopyStoredSettings()
+        {
+            sPort.DataBits = US.dataBits;
+            sPort.StopBits = US.stopBits;
+            sPort.RtsEnable = US.rtsEnabled;
+            sPort.Handshake = US.handshake;
+            sPort.Parity = US.parity;
+            sPort.Encoding = US.encoding;
+        }
+        /// <summary>
+        /// Updates text boxes text with user settings to show peristing of data
+        /// </summary>
+        public void UpdateTextBoxes()
+        {
+            comboBoxDataBits.Text = US.dataBits.ToString();
+            comboBoxHandshake.Text = US.handshake.ToString();
+            comboBoxParity.Text = US.parity.ToString();
+
+            // Check for stopbits value and set text accordingly
+            switch (US.stopBits)
+            {
+                case StopBits.One:
+                    comboBoxStopBits.Text = "1";
+                    break;
+                case StopBits.OnePointFive:
+                    comboBoxStopBits.Text = "1.5";
+                    break;
+                case StopBits.Two:
+                    comboBoxStopBits.Text = "2";
+                    break;
+            }
+
+            //If RTS is enabled mark correct radio buttons as checked/unchecked
+            if (US.rtsEnabled)
+            {
+                radioButtonRTSfalse.Checked = false;
+                radioButtonRTStrue.Checked = true;
+            }
+            else
+            {
+                radioButtonRTSfalse.Checked = true;
+                radioButtonRTStrue.Checked = false;
+            }
+
+            
+            switch(US.encoding.ToString())
+            {
+                case "System.Text.Latin1Encoding":
+                    comboBoxEncoding.Text = "iso-8859-1";
+                    break;
+                case "System.Text.UnicodeEncoding":
+                    comboBoxEncoding.Text = "unicode";
+                    break;
+                case "System.Text.ASCIIEncoding":
+                    comboBoxEncoding.Text = "ascii";
+                    break;
+            }
+        }
     }
 }

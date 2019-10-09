@@ -37,12 +37,13 @@
             this.labelDataBits = new System.Windows.Forms.Label();
             this.labelStopbits = new System.Windows.Forms.Label();
             this.comboBoxStopBits = new System.Windows.Forms.ComboBox();
-            this.comboBoxRTS = new System.Windows.Forms.ComboBox();
             this.comboBoxHandshake = new System.Windows.Forms.ComboBox();
             this.comboBoxDataBits = new System.Windows.Forms.ComboBox();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonDefault = new System.Windows.Forms.Button();
+            this.radioButtonRTStrue = new System.Windows.Forms.RadioButton();
+            this.radioButtonRTSfalse = new System.Windows.Forms.RadioButton();
             this.labelEncoding = new System.Windows.Forms.Label();
             this.comboBoxEncoding = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
@@ -127,27 +128,13 @@
             this.comboBoxStopBits.Items.AddRange(new object[] {
             "1",
             "1.5",
-            "2",
-            "None"});
+            "2"});
             this.comboBoxStopBits.Location = new System.Drawing.Point(200, 80);
             this.comboBoxStopBits.Name = "comboBoxStopBits";
             this.comboBoxStopBits.Size = new System.Drawing.Size(120, 21);
             this.comboBoxStopBits.TabIndex = 7;
             this.comboBoxStopBits.Text = "1";
             this.comboBoxStopBits.SelectedIndexChanged += new System.EventHandler(this.ComboBoxStopBits_SelectedIndexChanged);
-            // 
-            // comboBoxRTS
-            // 
-            this.comboBoxRTS.FormattingEnabled = true;
-            this.comboBoxRTS.Items.AddRange(new object[] {
-            "True",
-            "False"});
-            this.comboBoxRTS.Location = new System.Drawing.Point(200, 200);
-            this.comboBoxRTS.Name = "comboBoxRTS";
-            this.comboBoxRTS.Size = new System.Drawing.Size(120, 21);
-            this.comboBoxRTS.TabIndex = 8;
-            this.comboBoxRTS.Text = "True";
-            this.comboBoxRTS.SelectedIndexChanged += new System.EventHandler(this.ComboBoxRTS_SelectedIndexChanged);
             // 
             // comboBoxHandshake
             // 
@@ -209,11 +196,35 @@
             this.buttonDefault.UseVisualStyleBackColor = true;
             this.buttonDefault.Click += new System.EventHandler(this.ButtonDefault_Click);
             // 
+            // radioButtonRTStrue
+            // 
+            this.radioButtonRTStrue.AutoSize = true;
+            this.radioButtonRTStrue.Location = new System.Drawing.Point(200, 200);
+            this.radioButtonRTStrue.Name = "radioButtonRTStrue";
+            this.radioButtonRTStrue.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonRTStrue.TabIndex = 17;
+            this.radioButtonRTStrue.TabStop = true;
+            this.radioButtonRTStrue.Text = "True";
+            this.radioButtonRTStrue.UseVisualStyleBackColor = true;
+            this.radioButtonRTStrue.CheckedChanged += new System.EventHandler(this.radioButtonRTStrue_CheckedChanged);
+            // 
+            // radioButtonRTSfalse
+            // 
+            this.radioButtonRTSfalse.AutoSize = true;
+            this.radioButtonRTSfalse.Location = new System.Drawing.Point(270, 200);
+            this.radioButtonRTSfalse.Name = "radioButtonRTSfalse";
+            this.radioButtonRTSfalse.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonRTSfalse.TabIndex = 18;
+            this.radioButtonRTSfalse.TabStop = true;
+            this.radioButtonRTSfalse.Text = "False";
+            this.radioButtonRTSfalse.UseVisualStyleBackColor = true;
+            this.radioButtonRTSfalse.CheckedChanged += new System.EventHandler(this.radioButtonRTSfalse_CheckedChanged);
+            // 
             // labelEncoding
             // 
             this.labelEncoding.AutoSize = true;
             this.labelEncoding.Cursor = System.Windows.Forms.Cursors.Default;
-            this.labelEncoding.Location = new System.Drawing.Point(18, 240);
+            this.labelEncoding.Location = new System.Drawing.Point(15, 240);
             this.labelEncoding.Name = "labelEncoding";
             this.labelEncoding.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.labelEncoding.Size = new System.Drawing.Size(52, 13);
@@ -232,13 +243,15 @@
             this.comboBoxEncoding.Size = new System.Drawing.Size(120, 21);
             this.comboBoxEncoding.TabIndex = 16;
             this.comboBoxEncoding.Text = "iso-8859-1";
-            this.comboBoxEncoding.SelectedIndexChanged += new System.EventHandler(this.ComboBoxEncoding_SelectedIndexChanged);
+            this.comboBoxEncoding.SelectedIndexChanged += new System.EventHandler(this.comboBoxEncoding_SelectedIndexChanged);
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 314);
+            this.Controls.Add(this.radioButtonRTSfalse);
+            this.Controls.Add(this.radioButtonRTStrue);
             this.Controls.Add(this.comboBoxEncoding);
             this.Controls.Add(this.labelEncoding);
             this.Controls.Add(this.buttonDefault);
@@ -246,7 +259,6 @@
             this.Controls.Add(this.buttonConfirm);
             this.Controls.Add(this.comboBoxDataBits);
             this.Controls.Add(this.comboBoxHandshake);
-            this.Controls.Add(this.comboBoxRTS);
             this.Controls.Add(this.comboBoxStopBits);
             this.Controls.Add(this.labelStopbits);
             this.Controls.Add(this.labelDataBits);
@@ -274,12 +286,13 @@
         private System.Windows.Forms.Label labelDataBits;
         private System.Windows.Forms.Label labelStopbits;
         private System.Windows.Forms.ComboBox comboBoxStopBits;
-        private System.Windows.Forms.ComboBox comboBoxRTS;
         private System.Windows.Forms.ComboBox comboBoxHandshake;
         private System.Windows.Forms.ComboBox comboBoxDataBits;
         private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonDefault;
+        private System.Windows.Forms.RadioButton radioButtonRTStrue;
+        private System.Windows.Forms.RadioButton radioButtonRTSfalse;
         private System.Windows.Forms.Label labelEncoding;
         private System.Windows.Forms.ComboBox comboBoxEncoding;
     }
