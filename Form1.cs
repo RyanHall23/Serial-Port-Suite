@@ -3,23 +3,22 @@ using System.Diagnostics;
 using System.IO.Ports;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Reflection;
 using System.Text;
 
 namespace SerialSuite
 {
     public partial class Form1 : Form
     {
-        public SerialPort serialPort = new SerialPort();    //initialise serial port
-        int currentRow = 0;                                 //Update current row for displaying data
+        public SerialPort serialPort = new SerialPort();    // Initialise serial port
+        int currentRow = 0;                                 // Update current row for displaying data
 
         public Form1()
         {
             InitializeComponent();
-            InitSerial();                   //create initial serialport values
-            InitComboBoxPort();             //update combobox to show only connected ports
-            buttonPause.Enabled = true;    //restrict user error
-            buttonStop.Enabled = false;     //restrict user error
+            InitSerial();                   // Create initial serialport values
+            InitComboBoxPort();             // Update combobox to show only connected ports
+            buttonPause.Enabled = true;     // Restrict user error
+            buttonStop.Enabled = false;     // Restrict user error
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -166,13 +165,13 @@ namespace SerialSuite
             serialPort.Close();
             Debug.WriteLine("Opening Serial Port...");
 
-            try //Check if COM port can be opened
+            try // Check if COM port can be opened
             {
                 serialPort.Open();
                 labelStatusMsg.Text = "Connected to Port : " + serialPort.PortName + " Port";
                 serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
             }
-            catch (Exception ex) //throw excpetion for not found, alert user and reset butttons
+            catch (Exception ex) // Throw excpetion for not found, alert user and reset butttons
             {
                 labelStatusMsg.Text = "No Serial Device detected on : " + serialPort.PortName;
                 buttonStart.Enabled = true;
@@ -246,7 +245,7 @@ namespace SerialSuite
         {
             try
             {
-                //Default Serial Info
+                // Default Serial Info
                 serialPort.PortName = "COM0";
                 serialPort.BaudRate = 125000;
                 serialPort.Parity = Parity.None;
@@ -298,43 +297,48 @@ namespace SerialSuite
             switch(buttonClicked)
             {
                 case "start":
-                    //buttons
+                    // Buttons
                     buttonPause.Enabled = true;
                     buttonStop.Enabled = true;
                     buttonStart.Enabled = false;
                     buttonOptions.Enabled = false;
                     buttonUpdatePorts.Enabled = false;
 
-                    //combo boxes
+                    // Combo boxes
                     comboBoxBaud.Enabled = false;
                     comboBoxPort.Enabled = false;
                     break;
                 case "stop":
-                    //buttons
+                    // Buttons
                     buttonPause.Enabled = true;
                     buttonStart.Enabled = true;
                     buttonStop.Enabled = false;
                     buttonOptions.Enabled = true;
                     buttonUpdatePorts.Enabled = true;
 
-                    //combo boxes
+                    // Combo boxes
                     comboBoxBaud.Enabled = true;
                     comboBoxPort.Enabled = true;
                     break;
                 case "pause":
-                    //buttons
+                    // Buttons
                     buttonStart.Enabled = true;
                     buttonStop.Enabled = true;
                     buttonPause.Enabled = false;
                     buttonOptions.Enabled = false;
 
-                    //combo boxes
+                    // Combo boxes
                     comboBoxBaud.Enabled = false;
                     comboBoxPort.Enabled = false;
                     break;
             }
         }
 
+        /// <summary>
+        /// Export button allows for opening the populated gridview in excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonExport_Click(object sender, EventArgs e)
         {
             try

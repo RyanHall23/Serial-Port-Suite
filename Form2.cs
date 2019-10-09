@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Web.Script.Serialization;
 
 namespace SerialSuite
 {
@@ -15,8 +12,6 @@ namespace SerialSuite
         Form1 F1;                               // Initialises F1 form
         SerialPort sPort = new SerialPort();    // Used to copy create a template of the types
         UserSettings US = new UserSettings();   // Creates an object to persist serial port settings
-
-
 
         public Form2()
         {
@@ -39,15 +34,15 @@ namespace SerialSuite
             InitializeComponent();
             try
             {
-                US = ReadConfig();  // Attempt to read current serial port config
-                CopyStoredSettings();    // Write settings to application
-                UpdateTextBoxes();  // Update text boxes in advanced options window
+                US = ReadConfig();      // Attempt to read current serial port config
+                CopyStoredSettings();   // Write settings to application
+                UpdateTextBoxes();      // Update text boxes in advanced options window
             }
             catch(Exception ex)
             {
                 Debug.Write(ex);
                 DefaultSettings();  // Config is non-existent, set to defaults
-                StoreSettings();     // Copy default settings to peristence class
+                StoreSettings();    // Copy default settings to peristence class
                 WriteConfig(US);    // Write persistance class to disk
             }
         }
@@ -224,11 +219,11 @@ namespace SerialSuite
         {
             try
             {
-                F1.SerialPortSet(sPort);    // call set function and pass set version of serial port
-                StoreSettings();
-                WriteConfig(US);
+                F1.SerialPortSet(sPort);    // Call set function and pass set version of serial port
+                StoreSettings();            // Store port settings for persisting
+                WriteConfig(US);            // Store port settings peristence
                 Debug.WriteLine("Settings Confrimed");
-                this.Hide();                // close window
+                this.Hide();                // Close window
             }
             catch(Exception ex)
             {
@@ -243,7 +238,7 @@ namespace SerialSuite
         /// <param name="e"></param>
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("Changes Cancelled");
+            Debug.WriteLine("Changes Cancelled");   //Don't do any changes inc. store/writes/reads
             this.Hide();    //close window
         }
 
@@ -254,10 +249,10 @@ namespace SerialSuite
         /// <param name="e"></param>
         private void ButtonDefault_Click(object sender, EventArgs e)
         {
-            DefaultSettings();
-            F1.SerialPortSet(sPort);
-            StoreSettings();
-            WriteConfig(US);
+            DefaultSettings();          // Restore port settings to default
+            F1.SerialPortSet(sPort);    // Set port settings to default 
+            StoreSettings();            // Store default port settings ready for persistence
+            WriteConfig(US);            // Save port settings with peristence
             Debug.WriteLine("Settings set to default");
             this.Hide();
         }
@@ -294,7 +289,6 @@ namespace SerialSuite
             using (Stream stream = File.Open(serializationFile, FileMode.Open))
             {
                 var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
                 savedPort = (UserSettings)bformatter.Deserialize(stream);
             }
             return savedPort;
@@ -338,6 +332,7 @@ namespace SerialSuite
             sPort.Parity = US.parity;
             sPort.Encoding = US.encoding;
         }
+
         /// <summary>
         /// Updates text boxes text with user settings to show peristing of data
         /// </summary>

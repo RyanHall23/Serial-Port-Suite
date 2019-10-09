@@ -1,6 +1,7 @@
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\bin\Debug\SerialSuite.exe.config
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\bin\Debug\SerialSuite.exe
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\bin\Debug\SerialSuite.pdb
+D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.csproj.ResolveComReference.cache
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.Form1.resources
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.Form2.resources
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.Properties.Resources.resources
@@ -8,5 +9,4 @@ D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\Seria
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.csproj.CoreCompileInputs.cache
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.exe
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.pdb
-D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.csproj.ResolveComReference.cache
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.csprojAssemblyReference.cache
