@@ -124,7 +124,7 @@ namespace SerialSuite
         /// <param name="e"></param>
         private void ComboBoxDataBits_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (comboBoxStopBits.SelectedIndex)
+            switch (comboBoxDataBits.SelectedIndex)
             {
                 case 0:
                     sPort.DataBits = 8;
@@ -182,7 +182,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxEncoding_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxEncoding_SelectedIndexChanged(object sender, EventArgs e)
         {
             string currentEncoding = comboBoxEncoding.Text;
             sPort.Encoding = Encoding.GetEncoding(currentEncoding);
@@ -193,7 +193,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void radioButtonRTStrue_CheckedChanged(object sender, EventArgs e)
+        private void RadioButtonRTStrue_CheckedChanged(object sender, EventArgs e)
         {
             sPort.RtsEnable = true;
             Debug.WriteLine("RTS changed to " + sPort.RtsEnable.ToString());
@@ -204,7 +204,7 @@ namespace SerialSuite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void radioButtonRTSfalse_CheckedChanged(object sender, EventArgs e)
+        private void RadioButtonRTSfalse_CheckedChanged(object sender, EventArgs e)
         {
             sPort.RtsEnable = false;
             Debug.WriteLine("RTS changed to " + sPort.RtsEnable.ToString());
@@ -277,9 +277,11 @@ namespace SerialSuite
         }
 
         /// <summary>
-        /// Reads stored peristance on disk and returns the object
+        /// Reads stored peristance on disk
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Returns a UserSettings class object from the serialised data
+        /// </returns>
         public UserSettings ReadConfig()
         {
             string dir = @".\";

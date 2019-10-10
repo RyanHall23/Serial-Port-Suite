@@ -2,8 +2,9 @@
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Windows.Forms;
-using Excel = Microsoft.Office.Interop.Excel;
 using System.Text;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Collections.Generic;
 
 namespace SerialSuite
 {
@@ -214,14 +215,64 @@ namespace SerialSuite
                 }
                 else
                 {
+                    while(rawData.Length > 0)
+                    {
+                        List<char> ch = new List<char>();
+
+                        if (rawData.Length > 15)
+                        {
+                            for (int i = 0; i < 16; i++)
+                            {
+                                ch.Add(rawData[i]);
+                            }
+                            rawData = rawData.Remove(0, 16);
+                        }
+                        else
+                        {
+                            for (int i = 0; i < rawData.Length; i++)
+                            {
+                                ch.Add(rawData[i]);
+                            }
+                            rawData = rawData.Remove(0);
+                        }
+
+                        char[] charValues = ch.ToArray();
+                        string hexOutput = "";
+                        foreach (char _eachChar in charValues)
+                        {
+                            int value = Convert.ToInt32(_eachChar);
+                            hexOutput += String.Format("{0:X} ", value);
+                        }
+
+                        currentRow++;
+                        string dat = new string(ch.ToArray());
+                        DataGridViewRow row = (DataGridViewRow)serialDataGridView.Rows[0].Clone();
+                        row.Cells[0].Value = currentRow;
+                        row.Cells[1].Value = serialPort.PortName;
+                        row.Cells[2].Value = hexOutput;
+                        row.Cells[3].Value = dat;
+                        serialDataGridView.Rows.Add(row);
+                    }
+                }
+                #region Legacy
+                /*
+                if (this.serialDataGridView.InvokeRequired)
+                {
+                    SetTextCallback d = new SetTextCallback(UpdateHexText);
+                    this.Invoke(d, new object[] { rawData });
+                }
+                else
+                {
                     char[] charValues = rawData.ToCharArray();
                     string hexOutput = "";
+                    int i = 0;
                     foreach (char _eachChar in charValues)
                     {
+                        ++i;
                         int value = Convert.ToInt32(_eachChar);
                         hexOutput += String.Format("{0:X} ", value);
                     }
-                    
+
                     DataGridViewRow row = (DataGridViewRow)serialDataGridView.Rows[0].Clone();
                     row.Cells[0].Value = currentRow;
                     row.Cells[1].Value = serialPort.PortName;
@@ -230,8 +281,10 @@ namespace SerialSuite
                     serialDataGridView.Rows.Add(row);
                     currentRow++;
                 }
+                */
+                #endregion
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
