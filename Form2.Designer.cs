@@ -206,7 +206,7 @@
             this.radioButtonRTStrue.TabStop = true;
             this.radioButtonRTStrue.Text = "True";
             this.radioButtonRTStrue.UseVisualStyleBackColor = true;
-            this.radioButtonRTStrue.CheckedChanged += new System.EventHandler(this.radioButtonRTStrue_CheckedChanged);
+            this.radioButtonRTStrue.CheckedChanged += new System.EventHandler(this.RadioButtonRTStrue_CheckedChanged);
             // 
             // radioButtonRTSfalse
             // 
@@ -218,7 +218,7 @@
             this.radioButtonRTSfalse.TabStop = true;
             this.radioButtonRTSfalse.Text = "False";
             this.radioButtonRTSfalse.UseVisualStyleBackColor = true;
-            this.radioButtonRTSfalse.CheckedChanged += new System.EventHandler(this.radioButtonRTSfalse_CheckedChanged);
+            this.radioButtonRTSfalse.CheckedChanged += new System.EventHandler(this.RadioButtonRTSfalse_CheckedChanged);
             // 
             // labelEncoding
             // 
@@ -243,7 +243,7 @@
             this.comboBoxEncoding.Size = new System.Drawing.Size(120, 21);
             this.comboBoxEncoding.TabIndex = 16;
             this.comboBoxEncoding.Text = "iso-8859-1";
-            this.comboBoxEncoding.SelectedIndexChanged += new System.EventHandler(this.comboBoxEncoding_SelectedIndexChanged);
+            this.comboBoxEncoding.SelectedIndexChanged += new System.EventHandler(this.ComboBoxEncoding_SelectedIndexChanged);
             // 
             // Form2
             // 
