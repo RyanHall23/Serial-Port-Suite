@@ -1,9 +1,14 @@
 # Serial Port Suite
 
-Simple Serial Port reader for RS422/RS232/RS485 connections.
-This is a beta version, some instabilities may occur.
+A Serial Port reader for Windows.
+Can read RS485/RS422/RS232 data.
 
-This software is designed to read data from a serial COM port and display it in a HEX and Raw data format.
+Main Features:
+  - Live update connected COM ports
+  - Indepth advanced options with persistance E.G:
+    - Stopbits, Databits, Encoding, Handshake, RTS
+  - Export data to excel
+  - Raw and Hex data availible
 
 Known issues have been noted in issues section.
 For any addtional issues, please create an issue.
