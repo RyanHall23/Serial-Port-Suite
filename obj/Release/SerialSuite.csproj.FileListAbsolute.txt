@@ -9,3 +9,16 @@ D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\Ser
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.csproj.CoreCompileInputs.cache
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.exe
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.pdb
+D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.csprojAssemblyReference.cache
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\bin\Release\SerialSuite.exe.config
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\bin\Release\SerialSuite.exe
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\bin\Release\SerialSuite.pdb
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.csprojAssemblyReference.cache
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.csproj.ResolveComReference.cache
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.Form1.resources
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.Form2.resources
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.Properties.Resources.resources
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.csproj.GenerateResource.cache
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.csproj.CoreCompileInputs.cache
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.exe
+D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.pdb
