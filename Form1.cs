@@ -22,11 +22,6 @@ namespace SerialSuite
             buttonStop.Enabled = false;     // Restrict user error
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// Use Form2's instance of a serialPort for types etc and copy values into primary serial port
         /// </summary>

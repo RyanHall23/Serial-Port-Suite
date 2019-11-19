@@ -19,11 +19,6 @@ namespace SerialSuite
             this.Hide();
         }
 
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// Allows for access to Form1 to save user changes to the serial port configuration
         /// </summary>

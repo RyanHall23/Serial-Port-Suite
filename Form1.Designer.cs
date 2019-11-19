@@ -47,7 +47,9 @@
             this.buttonUpdatePorts = new System.Windows.Forms.Button();
             this.buttonClear = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.serialDataGridView)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOptions
@@ -148,7 +150,7 @@
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(13, 431);
+            this.labelStatus.Location = new System.Drawing.Point(13, 430);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(43, 13);
             this.labelStatus.TabIndex = 9;
@@ -157,7 +159,7 @@
             // labelStatusMsg
             // 
             this.labelStatusMsg.AutoSize = true;
-            this.labelStatusMsg.Location = new System.Drawing.Point(66, 431);
+            this.labelStatusMsg.Location = new System.Drawing.Point(66, 430);
             this.labelStatusMsg.Name = "labelStatusMsg";
             this.labelStatusMsg.Size = new System.Drawing.Size(22, 13);
             this.labelStatusMsg.TabIndex = 10;
@@ -176,7 +178,7 @@
             this.ColumnPort,
             this.ColumnHex,
             this.ColumnRaw});
-            this.serialDataGridView.Location = new System.Drawing.Point(12, 64);
+            this.serialDataGridView.Location = new System.Drawing.Point(12, 61);
             this.serialDataGridView.Name = "serialDataGridView";
             this.serialDataGridView.RowHeadersVisible = false;
             this.serialDataGridView.Size = new System.Drawing.Size(776, 364);
@@ -240,15 +242,26 @@
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.ButtonExport_Click);
             // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.serialDataGridView);
+            this.panel1.Location = new System.Drawing.Point(0, 1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(791, 428);
+            this.panel1.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.buttonExport);
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.buttonUpdatePorts);
-            this.Controls.Add(this.serialDataGridView);
             this.Controls.Add(this.labelStatusMsg);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.labelPort);
@@ -259,11 +272,12 @@
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.comboBoxPort);
             this.Controls.Add(this.comboBoxBaud);
+            this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Serial Port Suite";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.serialDataGridView)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,6 +303,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnHex;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnRaw;
         private System.Windows.Forms.Button buttonExport;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
