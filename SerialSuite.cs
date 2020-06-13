@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace SerialSuite
 {
-    static class Program
+    static class SerialSuite
     {
         /// <summary>
         /// The main entry point for the application.
@@ -13,8 +13,7 @@ namespace SerialSuite
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());   //main menu form
-            Application.Run(new Form2());   //options form
+            Application.Run(new MainWindowForm());   //main menu form
         }
     }
 }

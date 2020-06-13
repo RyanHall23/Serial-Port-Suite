@@ -1,6 +1,6 @@
 ﻿namespace SerialSuite
 {
-    partial class Form1
+    partial class MainWindowForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindowForm));
             this.buttonOptions = new System.Windows.Forms.Button();
             this.comboBoxBaud = new System.Windows.Forms.ComboBox();
             this.comboBoxPort = new System.Windows.Forms.ComboBox();

@@ -7,29 +7,28 @@ using System.Windows.Forms;
 
 namespace SerialSuite
 {
-    public partial class Form2 : Form
+    public partial class OptionsWindowForm : Form
     {
-        Form1 F1;                               // Initialises F1 form
+        MainWindowForm mainWindow;                               // Initialises F1 form
         SerialPort sPort = new SerialPort();    // Used to copy create a template of the types
-        UserSettings US = new UserSettings();   // Creates an object to persist serial port settings
+        UserSettings userSettings = new UserSettings();   // Creates an object to persist serial port settings
 
-        public Form2()
+        public OptionsWindowForm()
         {
             InitializeComponent();
-            this.Hide();
         }
 
         /// <summary>
         /// Allows for access to Form1 to save user changes to the serial port configuration
         /// </summary>
         /// <param name="callingForm"></param> Is the source of which this form was invoked
-        public Form2(Form callingForm)
+        public OptionsWindowForm(Form callingForm)
         {
-            F1 = callingForm as Form1;
+            mainWindow = callingForm as MainWindowForm;
             InitializeComponent();
             try
             {
-                US = ReadConfig();      // Attempt to read current serial port config
+                userSettings = ReadConfig();      // Attempt to read current serial port config
                 CopyStoredSettings();   // Write settings to application
                 UpdateTextBoxes();      // Update text boxes in advanced options window
             }
@@ -38,7 +37,7 @@ namespace SerialSuite
                 Debug.Write(ex);
                 DefaultSettings();  // Config is non-existent, set to defaults
                 StoreSettings();    // Copy default settings to peristence class
-                WriteConfig(US);    // Write persistance class to disk
+                WriteConfig(userSettings);    // Write persistance class to disk
             }
         }
 
@@ -214,10 +213,10 @@ namespace SerialSuite
         {
             try
             {
-                F1.SerialPortSet(sPort);    // Call set function and pass set version of serial port
+                mainWindow.SerialPortSet(sPort);    // Call set function and pass set version of serial port
                 StoreSettings();            // Store port settings for persisting
-                WriteConfig(US);            // Store port settings peristence
-                Debug.WriteLine("Settings Confrimed");
+                WriteConfig(userSettings);            // Store port settings peristence
+                Debug.WriteLine("Settings Confirmed");
                 this.Hide();                // Close window
             }
             catch(Exception ex)
@@ -245,9 +244,9 @@ namespace SerialSuite
         private void ButtonDefault_Click(object sender, EventArgs e)
         {
             DefaultSettings();          // Restore port settings to default
-            F1.SerialPortSet(sPort);    // Set port settings to default 
+            mainWindow.SerialPortSet(sPort);    // Set port settings to default 
             StoreSettings();            // Store default port settings ready for persistence
-            WriteConfig(US);            // Save port settings with peristence
+            WriteConfig(userSettings);            // Save port settings with peristence
             Debug.WriteLine("Settings set to default");
             this.Hide();
         }
@@ -296,12 +295,12 @@ namespace SerialSuite
         /// </summary>
         public void StoreSettings()
         {
-            US.parity = sPort.Parity;
-            US.stopBits = sPort.StopBits;
-            US.dataBits = sPort.DataBits;
-            US.handshake = sPort.Handshake;
-            US.rtsEnabled = sPort.RtsEnable;
-            US.encoding = sPort.Encoding;
+            userSettings.parity = sPort.Parity;
+            userSettings.stopBits = sPort.StopBits;
+            userSettings.dataBits = sPort.DataBits;
+            userSettings.handshake = sPort.Handshake;
+            userSettings.rtsEnabled = sPort.RtsEnable;
+            userSettings.encoding = sPort.Encoding;
         }
 
         /// <summary>
@@ -322,12 +321,12 @@ namespace SerialSuite
         /// </summary>
         public void CopyStoredSettings()
         {
-            sPort.DataBits = US.dataBits;
-            sPort.StopBits = US.stopBits;
-            sPort.RtsEnable = US.rtsEnabled;
-            sPort.Handshake = US.handshake;
-            sPort.Parity = US.parity;
-            sPort.Encoding = US.encoding;
+            sPort.DataBits = userSettings.dataBits;
+            sPort.StopBits = userSettings.stopBits;
+            sPort.RtsEnable = userSettings.rtsEnabled;
+            sPort.Handshake = userSettings.handshake;
+            sPort.Parity = userSettings.parity;
+            sPort.Encoding = userSettings.encoding;
         }
 
         /// <summary>
@@ -335,12 +334,12 @@ namespace SerialSuite
         /// </summary>
         public void UpdateTextBoxes()
         {
-            comboBoxDataBits.Text = US.dataBits.ToString();
-            comboBoxHandshake.Text = US.handshake.ToString();
-            comboBoxParity.Text = US.parity.ToString();
+            comboBoxDataBits.Text = userSettings.dataBits.ToString();
+            comboBoxHandshake.Text = userSettings.handshake.ToString();
+            comboBoxParity.Text = userSettings.parity.ToString();
 
             // Check for stopbits value and set text accordingly
-            switch (US.stopBits)
+            switch (userSettings.stopBits)
             {
                 case StopBits.One:
                     comboBoxStopBits.Text = "1";
@@ -354,7 +353,7 @@ namespace SerialSuite
             }
 
             //If RTS is enabled mark correct radio buttons as checked/unchecked
-            if (US.rtsEnabled)
+            if (userSettings.rtsEnabled)
             {
                 radioButtonRTSfalse.Checked = false;
                 radioButtonRTStrue.Checked = true;
@@ -366,7 +365,7 @@ namespace SerialSuite
             }
 
             
-            switch(US.encoding.ToString())
+            switch(userSettings.encoding.ToString())
             {
                 case "System.Text.Latin1Encoding":
                     comboBoxEncoding.Text = "iso-8859-1";

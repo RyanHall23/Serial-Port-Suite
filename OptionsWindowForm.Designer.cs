@@ -1,6 +1,6 @@
 ﻿namespace SerialSuite
 {
-    partial class Form2
+    partial class OptionsWindowForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsWindowForm));
             this.label1 = new System.Windows.Forms.Label();
             this.labelParity = new System.Windows.Forms.Label();
             this.comboBoxParity = new System.Windows.Forms.ComboBox();
