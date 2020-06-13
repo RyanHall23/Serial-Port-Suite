@@ -10,3 +10,15 @@ D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\Seria
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.exe
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.pdb
 D:\Ryan\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Debug\SerialSuite.csprojAssemblyReference.cache
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\bin\Debug\SerialSuite.exe.config
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\bin\Debug\SerialSuite.exe
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\bin\Debug\SerialSuite.pdb
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Debug\SerialSuite.csprojAssemblyReference.cache
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Debug\SerialSuite.csproj.ResolveComReference.cache
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Debug\SerialSuite.MainWindowForm.resources
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Debug\SerialSuite.OptionsWindowForm.resources
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Debug\SerialSuite.Properties.Resources.resources
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Debug\SerialSuite.csproj.GenerateResource.cache
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Debug\SerialSuite.csproj.CoreCompileInputs.cache
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Debug\SerialSuite.exe
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Debug\SerialSuite.pdb

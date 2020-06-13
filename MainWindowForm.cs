@@ -8,12 +8,12 @@ using System.Collections.Generic;
 
 namespace SerialSuite
 {
-    public partial class Form1 : Form
+    public partial class MainWindowForm : Form
     {
         public SerialPort serialPort = new SerialPort();    // Initialise serial port
         int currentRow = 0;                                 // Update current row for displaying data
 
-        public Form1()
+        public MainWindowForm()
         {
             InitializeComponent();
             InitSerial();                   // Create initial serialport values
@@ -101,8 +101,8 @@ namespace SerialSuite
         /// <param name="e"></param>
         private void ButtonOptions_Click(object sender, EventArgs e)
         {
-            Form2 F2 = new Form2(this);
-            F2.Show();
+            OptionsWindowForm optionsWindow = new OptionsWindowForm(this);
+            optionsWindow.Show();
         }
 
         /// <summary>
@@ -396,9 +396,9 @@ namespace SerialSuite
                 if (dataObj != null)
                     Clipboard.SetDataObject(dataObj);
 
-                Microsoft.Office.Interop.Excel.Application xlexcel;
-                Microsoft.Office.Interop.Excel.Workbook xlWorkBook;
-                Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet;
+                Excel.Application xlexcel;
+                Excel.Workbook xlWorkBook;
+                Excel.Worksheet xlWorkSheet;
                 object misValue = System.Reflection.Missing.Value;
                 xlexcel = new Excel.Application();
                 xlexcel.Visible = true;
