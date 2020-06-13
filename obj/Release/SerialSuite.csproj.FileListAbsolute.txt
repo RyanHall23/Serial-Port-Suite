@@ -22,3 +22,15 @@ D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Rele
 D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.csproj.CoreCompileInputs.cache
 D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.exe
 D:\Users\RyanN\Documents\Visual Studio Projects\SerialSuite\SerialSuite\obj\Release\SerialSuite.pdb
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\bin\Release\SerialSuite.exe.config
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\bin\Release\SerialSuite.exe
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\bin\Release\SerialSuite.pdb
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Release\SerialSuite.csprojAssemblyReference.cache
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Release\SerialSuite.csproj.ResolveComReference.cache
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Release\SerialSuite.MainWindowForm.resources
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Release\SerialSuite.OptionsWindowForm.resources
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Release\SerialSuite.Properties.Resources.resources
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Release\SerialSuite.csproj.GenerateResource.cache
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Release\SerialSuite.csproj.CoreCompileInputs.cache
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Release\SerialSuite.exe
+D:\Users\RyanN\Documents\Visual Studio 2019 Projects\Serial-Port-Suite\obj\Release\SerialSuite.pdb
