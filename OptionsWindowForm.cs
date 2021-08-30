@@ -9,9 +9,9 @@ namespace SerialSuite
 {
     public partial class OptionsWindowForm : Form
     {
-        MainWindowForm mainWindow;                               // Initialises F1 form
-        SerialPort sPort = new SerialPort();    // Used to copy create a template of the types
-        UserSettings userSettings = new UserSettings();   // Creates an object to persist serial port settings
+        readonly MainWindowForm mainWindow;                              // Initialises MainWindowForm
+        readonly SerialPort sPort = new SerialPort();                    // Used to copy create a template of the types
+        readonly UserSettings userSettings = new UserSettings();         // Creates an object to persist serial port settings
 
         public OptionsWindowForm()
         {

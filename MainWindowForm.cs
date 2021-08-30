@@ -23,7 +23,7 @@ namespace SerialSuite
         }
 
         /// <summary>
-        /// Use Form2's instance of a serialPort for types etc and copy values into primary serial port
+        /// Use OptionsForm instance of a serialPort for types etc and copy values into primary serial port
         /// </summary>
         /// <param name="sPort"></param>
         public void SerialPortSet(SerialPort sPort)
@@ -249,35 +249,6 @@ namespace SerialSuite
                         serialDataGridView.Rows.Add(row);
                     }
                 }
-                #region Legacy
-                /*
-                if (this.serialDataGridView.InvokeRequired)
-                {
-                    SetTextCallback d = new SetTextCallback(UpdateHexText);
-                    this.Invoke(d, new object[] { rawData });
-                }
-                else
-                {
-                    char[] charValues = rawData.ToCharArray();
-                    string hexOutput = "";
-                    int i = 0;
-                    foreach (char _eachChar in charValues)
-                    {
-                        ++i;
-                        int value = Convert.ToInt32(_eachChar);
-                        hexOutput += String.Format("{0:X} ", value);
-                    }
-
-                    DataGridViewRow row = (DataGridViewRow)serialDataGridView.Rows[0].Clone();
-                    row.Cells[0].Value = currentRow;
-                    row.Cells[1].Value = serialPort.PortName;
-                    row.Cells[2].Value = hexOutput;
-                    row.Cells[3].Value = rawData;
-                    serialDataGridView.Rows.Add(row);
-                    currentRow++;
-                }
-                */
-                #endregion
             }
             catch (Exception ex)
             {
